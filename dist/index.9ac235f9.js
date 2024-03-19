@@ -611,17 +611,51 @@ const init = function() {
 };
 init();
 
-},{"./welcomeController":"64iI8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./navigationController":"eT0wj","./fridgeController":"1lNql","./recipesController":"90rdM","./recipeDetailsController":"3e1LN","../views/welcomeView":"kga6f","../views/fridgeView":"d42xV","../views/recipesView":"iLzNb","../views/recipeDetailsView":"43bGi","../views/menuView":"lg0TE","../views/shoppingListView":"eqBFd","./menuController":"bRC7z","./shoppingListController":"4OUPd","../views/navigationListener":"awzMj"}],"64iI8":[function(require,module,exports) {
+},{"../views/navigationListener":"awzMj","../views/welcomeView":"kga6f","../views/fridgeView":"d42xV","../views/recipesView":"iLzNb","../views/recipeDetailsView":"43bGi","../views/menuView":"lg0TE","../views/shoppingListView":"eqBFd","./navigationController":"eT0wj","./fridgeController":"1lNql","./recipesController":"90rdM","./recipeDetailsController":"3e1LN","./menuController":"bRC7z","./shoppingListController":"4OUPd","./welcomeController":"64iI8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"awzMj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "controlWelcome", ()=>controlWelcome);
-var _welcomeViewJs = require("../views/welcomeView.js");
-var _welcomeViewJsDefault = parcelHelpers.interopDefault(_welcomeViewJs);
-function controlWelcome() {
-    (0, _welcomeViewJsDefault.default).renderHTML();
+function navigationListener(handler) {
+    // "handler" is handleNavigation
+    document.addEventListener("click", function(e) {
+        if (e.target.classList.contains("navbar__item")) // Handling click on navbar links
+        handler(e.target.dataset.link);
+        else if (e.target.classList.contains("header__logo")) // Handling click on navbar logo
+        handler("welcome");
+    });
 }
+exports.default = navigationListener;
 
-},{"../views/welcomeView.js":"kga6f","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kga6f":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"kga6f":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./view.js");
@@ -668,136 +702,7 @@ class View {
 }
 exports.default = View;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"eT0wj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "handleNavigation", ()=>handleNavigation);
-var _welcomeControllerJs = require("./welcomeController.js");
-var _fridgeControllerJs = require("./fridgeController.js");
-var _recipesControllerJs = require("./recipesController.js");
-var _menuControllerJs = require("./menuController.js");
-var _shoppingListControllerJs = require("./shoppingListController.js");
-function handleNavigation(value) {
-    switch(value){
-        case "welcome":
-            (0, _welcomeControllerJs.controlWelcome)();
-            break;
-        case "fridge":
-            (0, _fridgeControllerJs.controlFridge)();
-            break;
-        case "recipes":
-            (0, _recipesControllerJs.controlRecipes)();
-            break;
-        case "menu":
-            (0, _menuControllerJs.controlMenu)();
-            break;
-        case "shopping":
-            (0, _shoppingListControllerJs.controlShoppingList)();
-            break;
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./welcomeController.js":"64iI8","./fridgeController.js":"1lNql","./recipesController.js":"90rdM","./menuController.js":"bRC7z","./shoppingListController.js":"4OUPd"}],"1lNql":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "controlFridge", ()=>controlFridge);
-parcelHelpers.export(exports, "handleAutocomplete", ()=>handleAutocomplete);
-parcelHelpers.export(exports, "handleSubmit", ()=>handleSubmit);
-parcelHelpers.export(exports, "handleSort", ()=>handleSort);
-parcelHelpers.export(exports, "handleDeleteIngredient", ()=>handleDeleteIngredient);
-var _fridgeViewJs = require("../views/fridgeView.js");
-var _fridgeViewJsDefault = parcelHelpers.interopDefault(_fridgeViewJs);
-var _modelJs = require("../model.js");
-async function controlFridge() {
-    (0, _fridgeViewJsDefault.default).renderHTML();
-    if ((0, _modelJs.state).fridgeIngredients.length === 0) return;
-    (0, _modelJs.state).fridgeIngredients.forEach((el)=>(0, _fridgeViewJsDefault.default).displayIngredient(el));
-    (0, _fridgeViewJsDefault.default).updateNumIngredients();
-    console.log("\uD83D\uDCA5 fridge ingredients:", (0, _modelJs.state).fridgeIngredients);
-}
-async function handleAutocomplete(query) {
-    try {
-        const results = await (0, _modelJs.loadAutocompleteInfo)(query);
-        (0, _fridgeViewJsDefault.default).displaySuggestionsList(results);
-    } catch (error) {
-        (0, _fridgeViewJsDefault.default).displayErrorAutocomplete();
-    }
-}
-async function handleSubmit(data) {
-    const fridgeIngredients = (0, _modelJs.state).fridgeIngredients;
-    const ok = (0, _fridgeViewJsDefault.default).checkIngredientFormat(data, fridgeIngredients);
-    if (!ok) return;
-    await (0, _modelJs.loadIngredientInfo)(data);
-    const category = (0, _fridgeViewJsDefault.default).selectCategory((0, _modelJs.state).currentIngredient);
-    (0, _fridgeViewJsDefault.default).highlightCategory(category);
-    handleSort(category);
-}
-function handleSort(data) {
-    // prettier-ignore
-    const categories = [
-        "vegetable",
-        "fruit",
-        "meat",
-        "fish",
-        "drink",
-        "grain",
-        "spice"
-    ];
-    (0, _fridgeViewJsDefault.default).renderHTML();
-    (0, _fridgeViewJsDefault.default).highlightCategory(data);
-    if (data === "all") (0, _modelJs.state).fridgeIngredients.forEach((el)=>{
-        (0, _fridgeViewJsDefault.default).displayIngredient(el);
-    });
-    let other;
-    if (data === "other") (0, _modelJs.state).fridgeIngredients.forEach((ing)=>{
-        other = true;
-        categories.forEach((category)=>{
-            if (ing.categoryPath.includes(category)) other = false;
-        });
-        if (other === true) (0, _fridgeViewJsDefault.default).displayIngredient(ing);
-    });
-    (0, _modelJs.state).fridgeIngredients.forEach((el)=>{
-        if (el.categoryPath.includes(data)) (0, _fridgeViewJsDefault.default).displayIngredient(el);
-    });
-    (0, _fridgeViewJsDefault.default).updateNumIngredients();
-}
-function handleDeleteIngredient(id) {
-    const [ing] = (0, _modelJs.state).fridgeIngredients.filter((el)=>el.id === id);
-    (0, _modelJs.deleteIng)(id);
-    (0, _fridgeViewJsDefault.default).removeIngredient(ing.name);
-}
-
-},{"../views/fridgeView.js":"d42xV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../model.js":"Y4A21"}],"d42xV":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d42xV":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _configJs = require("../config.js");
@@ -1060,7 +965,6 @@ exports.default = new Fridge();
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "API_URL", ()=>API_URL);
-parcelHelpers.export(exports, "API_KEY", ()=>API_KEY);
 parcelHelpers.export(exports, "DONE_TYPING_INTERVAL", ()=>DONE_TYPING_INTERVAL);
 parcelHelpers.export(exports, "TRASH", ()=>TRASH);
 parcelHelpers.export(exports, "ARROW_LEFT", ()=>ARROW_LEFT);
@@ -1073,7 +977,6 @@ parcelHelpers.export(exports, "LIKE", ()=>LIKE);
 parcelHelpers.export(exports, "RED_CROSS", ()=>RED_CROSS);
 parcelHelpers.export(exports, "GREEN_CHECK", ()=>GREEN_CHECK);
 const API_URL = "https://api.spoonacular.com/";
-const API_KEY = "99731368bd944c4a9882a781fabcd8d6";
 const DONE_TYPING_INTERVAL = 350;
 const TRASH = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>`;
 const ARROW_LEFT = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>`;
@@ -1086,256 +989,7 @@ const LIKE = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fil
 const RED_CROSS = `<svg style="color: red" height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"></circle><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6" fill="red"></path><path d="m5.5 5.5 6 6" fill="red"></path></g></g></svg>`;
 const GREEN_CHECK = `<svg style="color: rgb(34, 186, 63);" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"> <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" fill="#22ba3f"></path> <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" fill="#22ba3f"></path> </svg>`;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
-///////////////////// PRELOADED DATA //////////////////////
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-parcelHelpers.export(exports, "loadAutocompleteInfo", ()=>loadAutocompleteInfo);
-parcelHelpers.export(exports, "loadIngredientInfo", ()=>loadIngredientInfo);
-parcelHelpers.export(exports, "deleteIng", ()=>deleteIng);
-parcelHelpers.export(exports, "loadRecipesMyIng", ()=>loadRecipesMyIng);
-parcelHelpers.export(exports, "loadRecipesQuery", ()=>loadRecipesQuery);
-parcelHelpers.export(exports, "loadRecipeDetails", ()=>loadRecipeDetails);
-parcelHelpers.export(exports, "addRecipeToMenu", ()=>addRecipeToMenu);
-parcelHelpers.export(exports, "addIngredientsToMenu", ()=>addIngredientsToMenu);
-parcelHelpers.export(exports, "deleteRecipe", ()=>deleteRecipe);
-const apple = {
-    aisle: "Produce",
-    categoryPath: [
-        "fruit"
-    ],
-    consistency: "solid",
-    id: 9003,
-    image: "apple.jpg",
-    meta: [],
-    name: "apples",
-    original: "apples",
-    originalName: "apples",
-    possibleUnits: 12["serving"],
-    shoppingListUnits: [
-        "pieces"
-    ]
-};
-const bread = {
-    aisle: "Bakery/Bread",
-    categoryPath: [
-        "bread"
-    ],
-    consistency: "solid",
-    id: 18064,
-    image: "white-bread.jpg",
-    meta: [],
-    name: "bread",
-    original: "bread",
-    originalName: "bread",
-    possibleUnits: 12["baguette"],
-    shoppingListUnits: [
-        "pieces"
-    ]
-};
-const zucchini = {
-    aisle: "Produce",
-    categoryPath: [
-        "summer squash",
-        "squash",
-        "vegetable"
-    ],
-    consistency: "solid",
-    id: 11477,
-    image: "zucchini.jpg",
-    meta: [],
-    name: "courgette",
-    original: "courgette",
-    originalName: "courgette",
-    possibleUnits: 9["cup"],
-    shoppingListUnits: [
-        "pieces"
-    ]
-};
-const state = {
-    currentIngredient: {},
-    fridgeIngredients: [],
-    recipes: [],
-    currentRecipe: {},
-    menu: [],
-    menuIngredients: [],
-    shoppingList: []
-};
-const loadAutocompleteInfo = async function(query) {
-    try {
-        // WORKING WITH THE API
-        const res = await fetch(`http://localhost:3000/autocomplete/${query}`);
-        const data = await res.json();
-        if (data.length === 0) throw new Error("No results found");
-        return data;
-    // WORKING LOCALLY
-    // return [
-    //   { name: 'apple' },
-    //   { name: 'bread' },
-    //   { name: 'zucchini' },
-    //   { name: 'apple cider' },
-    // ];
-    } catch (error) {
-        throw error;
-    }
-};
-const loadIngredientInfo = async function(name) {
-    try {
-        // Get ingredient ID based on its name
-        const res = await fetch(`http://localhost:3000/search/${name}`);
-        const data = await res.json();
-        if (data.results.length === 0) throw new Error();
-        const id = data.results[0].id;
-        // Get ingredient informations based on its ID
-        const response = await fetch(`http://localhost:3000/info/${id}`);
-        console.log("response:", response);
-        const info = await response.json();
-        if (!info.name) throw new Error("Something went wrong loading ingredient data");
-        state.currentIngredient = info;
-        state.currentIngredient.quantity = 1;
-        state.fridgeIngredients.push(info);
-        updateLocalStorageIngredients();
-    // WORKING LOCALLY
-    // if (name === 'apple') state.currentIngredient = apple;
-    // if (name === 'bread') state.currentIngredient = bread;
-    // if (name === 'zucchini') state.currentIngredient = zucchini;
-    // state.currentIngredient.quantity = 1;
-    // state.fridgeIngredients.push(state.currentIngredient);
-    // updateLocalStorageIngredients();
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-};
-const deleteIng = function(id) {
-    state.fridgeIngredients.pop((ing)=>ing.id === id);
-    updateLocalStorageIngredients();
-};
-const loadRecipesMyIng = async function() {
-    let ingredientsList = "";
-    state.fridgeIngredients.forEach((el)=>{
-        ingredientsList += `${el.name},+`;
-    });
-    ingredientsList = ingredientsList.slice(0, -2);
-    if (ingredientsList === "") return;
-    const res = await fetch(`http://localhost:3000/recipesByIng/${ingredientsList}`);
-    const data = await res.json();
-    state.recipes = data;
-    return data;
-// WORKING LOCALLY
-// const data = JSON.parse(window.localStorage.getItem('recipes'));
-// state.recipes = data;
-// return data;
-};
-const loadRecipesQuery = async function(query, diets, intolerances) {
-    if (query === "") query = undefined;
-    if (diets === "") diets = undefined;
-    if (intolerances === "") intolerances = undefined;
-    const res = await fetch(`http://localhost:3000/recipesByQuery/${query}/${diets}/${intolerances}`);
-    const data = await res.json();
-    state.recipes = data.results;
-    return data.results;
-// WORKING LOCALLY
-// const data = JSON.parse(window.localStorage.getItem('recipes'));
-// state.recipes = data;
-// return data;
-};
-const loadRecipeDetails = async function(id) {
-    const res = await fetch(`http://localhost:3000/recipeDetails/${id}`);
-    const data = await res.json();
-    state.currentRecipe = data;
-    updateLocalStorageCurrentRecipe();
-    console.log("\uD83D\uDCA5 load recipe details:", data);
-    return data;
-// WORKING LOCALLY
-// const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
-// return data;
-};
-const addRecipeToMenu = function() {
-    state.menu.push(state.currentRecipe);
-    updateLocalStorageMenu();
-};
-const addIngredientsToMenu = function() {
-    state.menuIngredients.push(...state.currentRecipe.extendedIngredients);
-    updateLocalStorageMenuIngredients();
-};
-const deleteRecipe = function(id) {
-    state.menu.pop((recipe)=>recipe.id === id);
-    updateLocalStorageMenu();
-};
-///////////////////// LOCAL STORAGE UPDATES //////////////////////
-const updateLocalStorageIngredients = function() {
-    window.localStorage.setItem("fridgeIngredients", JSON.stringify({
-        ...state.fridgeIngredients
-    }));
-};
-const updateLocalStorageCurrentRecipe = function() {
-    window.localStorage.setItem("currentRecipe", JSON.stringify({
-        ...state.currentRecipe
-    }));
-};
-const updateLocalStorageMenu = function() {
-    window.localStorage.setItem("menu", JSON.stringify({
-        ...state.menu
-    }));
-};
-const updateLocalStorageMenuIngredients = function() {
-    window.localStorage.setItem("menuIngredients", JSON.stringify({
-        ...state.menuIngredients
-    }));
-};
-const updateLocalStorageShoppingList = function() {};
-///////////////////// STATE INIT //////////////////////
-const init = function() {
-    const fridgeIngredients = localStorage.getItem("fridgeIngredients");
-    const menu = localStorage.getItem("menu");
-    const menuIngredients = localStorage.getItem("menuIngredients");
-    const shoppingList = localStorage.getItem("shoppingList");
-    if (fridgeIngredients) state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
-    if (menu) state.menu = Object.values(JSON.parse(menu));
-    if (menuIngredients) state.menuIngredients = Object.values(JSON.parse(menuIngredients));
-    if (shoppingList) state.shoppingList = Object.values(JSON.parse(shoppingList));
-    console.log("\uD83D\uDCA5 STATE", state);
-};
-init();
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"90rdM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "controlRecipes", ()=>controlRecipes);
-parcelHelpers.export(exports, "handleRecipeDetailsFromSearch", ()=>handleRecipeDetailsFromSearch);
-parcelHelpers.export(exports, "handleSearchRecipes", ()=>handleSearchRecipes);
-var _recipesViewJs = require("../views/recipesView.js");
-var _recipesViewJsDefault = parcelHelpers.interopDefault(_recipesViewJs);
-var _modelJs = require("../model.js");
-var _recipeDetailsViewJs = require("../views/recipeDetailsView.js");
-var _recipeDetailsViewJsDefault = parcelHelpers.interopDefault(_recipeDetailsViewJs);
-function controlRecipes() {
-    (0, _recipesViewJsDefault.default).renderHTML();
-}
-async function handleRecipeDetailsFromSearch(id) {
-    const recipe = (0, _modelJs.state).recipes.find((el)=>+el.id === +id);
-    const recipeData = await (0, _modelJs.loadRecipeDetails)(recipe.id);
-    (0, _recipeDetailsViewJsDefault.default).renderHTML(recipeData, "recipes");
-}
-async function handleSearchRecipes(useOnlyMyIng, query, diets, intolerances) {
-    try {
-        if (useOnlyMyIng) {
-            const data = await (0, _modelJs.loadRecipesMyIng)();
-            (0, _recipesViewJsDefault.default).displayRecipes(data);
-        }
-        if (!useOnlyMyIng) {
-            if (!query) throw new Error("Please enter a query");
-            const data = await (0, _modelJs.loadRecipesQuery)(query, diets, intolerances);
-            (0, _recipesViewJsDefault.default).displayRecipes(data);
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-},{"../views/recipesView.js":"iLzNb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../model.js":"Y4A21","../views/recipeDetailsView.js":"43bGi"}],"iLzNb":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iLzNb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./view.js");
@@ -1638,31 +1292,7 @@ class RecipeDetailsView extends (0, _viewJsDefault.default) {
 }
 exports.default = new RecipeDetailsView();
 
-},{"./view.js":"bWlJ9","../config.js":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bRC7z":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "controlMenu", ()=>controlMenu);
-parcelHelpers.export(exports, "handleRecipeDetailsFromMenu", ()=>handleRecipeDetailsFromMenu);
-parcelHelpers.export(exports, "handleDeleteRecipe", ()=>handleDeleteRecipe);
-var _menuViewJs = require("../views/menuView.js");
-var _menuViewJsDefault = parcelHelpers.interopDefault(_menuViewJs);
-var _modelJs = require("../model.js");
-var _recipeDetailsViewJs = require("../views/recipeDetailsView.js");
-var _recipeDetailsViewJsDefault = parcelHelpers.interopDefault(_recipeDetailsViewJs);
-function controlMenu() {
-    (0, _menuViewJsDefault.default).renderHTML((0, _modelJs.state).menu);
-}
-function handleRecipeDetailsFromMenu(id) {
-    const recipe = (0, _modelJs.state).menu.find((el)=>+el.id === +id);
-    (0, _recipeDetailsViewJsDefault.default).renderHTML(recipe, "menu");
-}
-function handleDeleteRecipe(id) {
-    const [recipe] = (0, _modelJs.state).menu.filter((el)=>el.id === id);
-    (0, _modelJs.deleteRecipe)(id);
-    (0, _menuViewJsDefault.default).removeRecipe(recipe.id);
-}
-
-},{"../views/menuView.js":"lg0TE","../model.js":"Y4A21","../views/recipeDetailsView.js":"43bGi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lg0TE":[function(require,module,exports) {
+},{"./view.js":"bWlJ9","../config.js":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lg0TE":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./view.js");
@@ -1729,22 +1359,7 @@ class MenuView extends (0, _viewJsDefault.default) {
 }
 exports.default = new MenuView();
 
-},{"./view.js":"bWlJ9","../config.js":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4OUPd":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "controlShoppingList", ()=>controlShoppingList);
-parcelHelpers.export(exports, "handlePdf", ()=>handlePdf);
-var _shoppingListViewJs = require("../views/shoppingListView.js");
-var _shoppingListViewJsDefault = parcelHelpers.interopDefault(_shoppingListViewJs);
-var _modelJs = require("../model.js");
-function controlShoppingList() {
-    (0, _shoppingListViewJsDefault.default).renderHTML((0, _modelJs.state).menuIngredients);
-}
-function handlePdf() {
-    (0, _shoppingListViewJsDefault.default).generatePDF((0, _modelJs.state).menuIngredients);
-}
-
-},{"../views/shoppingListView.js":"eqBFd","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eqBFd":[function(require,module,exports) {
+},{"./view.js":"bWlJ9","../config.js":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eqBFd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _configJs = require("../config.js");
@@ -22927,7 +22542,404 @@ module.exports = require("506fec890b96892c")(require("9e4dc32dbc01b7ff").getBund
     throw err;
 }).then(()=>module.bundle.root("gt0ZF"));
 
-},{"506fec890b96892c":"61B45","9e4dc32dbc01b7ff":"lgJ39"}],"3e1LN":[function(require,module,exports) {
+},{"506fec890b96892c":"61B45","9e4dc32dbc01b7ff":"lgJ39"}],"eT0wj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handleNavigation", ()=>handleNavigation);
+var _welcomeControllerJs = require("./welcomeController.js");
+var _fridgeControllerJs = require("./fridgeController.js");
+var _recipesControllerJs = require("./recipesController.js");
+var _menuControllerJs = require("./menuController.js");
+var _shoppingListControllerJs = require("./shoppingListController.js");
+function handleNavigation(value) {
+    switch(value){
+        case "welcome":
+            (0, _welcomeControllerJs.controlWelcome)();
+            break;
+        case "fridge":
+            (0, _fridgeControllerJs.controlFridge)();
+            break;
+        case "recipes":
+            (0, _recipesControllerJs.controlRecipes)();
+            break;
+        case "menu":
+            (0, _menuControllerJs.controlMenu)();
+            break;
+        case "shopping":
+            (0, _shoppingListControllerJs.controlShoppingList)();
+            break;
+    }
+}
+
+},{"./welcomeController.js":"64iI8","./fridgeController.js":"1lNql","./recipesController.js":"90rdM","./menuController.js":"bRC7z","./shoppingListController.js":"4OUPd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"64iI8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "controlWelcome", ()=>controlWelcome);
+var _welcomeViewJs = require("../views/welcomeView.js");
+var _welcomeViewJsDefault = parcelHelpers.interopDefault(_welcomeViewJs);
+function controlWelcome() {
+    (0, _welcomeViewJsDefault.default).renderHTML();
+}
+
+},{"../views/welcomeView.js":"kga6f","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1lNql":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "controlFridge", ()=>controlFridge);
+parcelHelpers.export(exports, "handleAutocomplete", ()=>handleAutocomplete);
+parcelHelpers.export(exports, "handleSubmit", ()=>handleSubmit);
+parcelHelpers.export(exports, "handleSort", ()=>handleSort);
+parcelHelpers.export(exports, "handleDeleteIngredient", ()=>handleDeleteIngredient);
+var _fridgeViewJs = require("../views/fridgeView.js");
+var _fridgeViewJsDefault = parcelHelpers.interopDefault(_fridgeViewJs);
+var _modelJs = require("../model.js");
+async function controlFridge() {
+    (0, _fridgeViewJsDefault.default).renderHTML();
+    if ((0, _modelJs.state).fridgeIngredients.length === 0) return;
+    (0, _modelJs.state).fridgeIngredients.forEach((el)=>(0, _fridgeViewJsDefault.default).displayIngredient(el));
+    (0, _fridgeViewJsDefault.default).updateNumIngredients();
+    console.log("\uD83D\uDCA5 fridge ingredients:", (0, _modelJs.state).fridgeIngredients);
+}
+async function handleAutocomplete(query) {
+    try {
+        const results = await (0, _modelJs.loadAutocompleteInfo)(query);
+        (0, _fridgeViewJsDefault.default).displaySuggestionsList(results);
+    } catch (error) {
+        (0, _fridgeViewJsDefault.default).displayErrorAutocomplete();
+    }
+}
+async function handleSubmit(data) {
+    const fridgeIngredients = (0, _modelJs.state).fridgeIngredients;
+    const ok = (0, _fridgeViewJsDefault.default).checkIngredientFormat(data, fridgeIngredients);
+    if (!ok) return;
+    await (0, _modelJs.loadIngredientInfo)(data);
+    const category = (0, _fridgeViewJsDefault.default).selectCategory((0, _modelJs.state).currentIngredient);
+    (0, _fridgeViewJsDefault.default).highlightCategory(category);
+    handleSort(category);
+}
+function handleSort(data) {
+    // prettier-ignore
+    const categories = [
+        "vegetable",
+        "fruit",
+        "meat",
+        "fish",
+        "drink",
+        "grain",
+        "spice"
+    ];
+    (0, _fridgeViewJsDefault.default).renderHTML();
+    (0, _fridgeViewJsDefault.default).highlightCategory(data);
+    if (data === "all") (0, _modelJs.state).fridgeIngredients.forEach((el)=>{
+        (0, _fridgeViewJsDefault.default).displayIngredient(el);
+    });
+    let other;
+    if (data === "other") (0, _modelJs.state).fridgeIngredients.forEach((ing)=>{
+        other = true;
+        categories.forEach((category)=>{
+            if (ing.categoryPath.includes(category)) other = false;
+        });
+        if (other === true) (0, _fridgeViewJsDefault.default).displayIngredient(ing);
+    });
+    (0, _modelJs.state).fridgeIngredients.forEach((el)=>{
+        if (el.categoryPath.includes(data)) (0, _fridgeViewJsDefault.default).displayIngredient(el);
+    });
+    (0, _fridgeViewJsDefault.default).updateNumIngredients();
+}
+function handleDeleteIngredient(id) {
+    const [ing] = (0, _modelJs.state).fridgeIngredients.filter((el)=>el.id === id);
+    (0, _modelJs.deleteIng)(id);
+    (0, _fridgeViewJsDefault.default).removeIngredient(ing.name);
+}
+
+},{"../views/fridgeView.js":"d42xV","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
+///////////////////// PRELOADED DATA //////////////////////
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "loadAutocompleteInfo", ()=>loadAutocompleteInfo);
+parcelHelpers.export(exports, "loadIngredientInfo", ()=>loadIngredientInfo);
+parcelHelpers.export(exports, "deleteIng", ()=>deleteIng);
+parcelHelpers.export(exports, "loadRecipesMyIng", ()=>loadRecipesMyIng);
+parcelHelpers.export(exports, "loadRecipesQuery", ()=>loadRecipesQuery);
+parcelHelpers.export(exports, "loadRecipeDetails", ()=>loadRecipeDetails);
+parcelHelpers.export(exports, "addRecipeToMenu", ()=>addRecipeToMenu);
+parcelHelpers.export(exports, "addIngredientsToMenu", ()=>addIngredientsToMenu);
+parcelHelpers.export(exports, "deleteRecipe", ()=>deleteRecipe);
+const apple = {
+    aisle: "Produce",
+    categoryPath: [
+        "fruit"
+    ],
+    consistency: "solid",
+    id: 9003,
+    image: "apple.jpg",
+    meta: [],
+    name: "apples",
+    original: "apples",
+    originalName: "apples",
+    possibleUnits: 12["serving"],
+    shoppingListUnits: [
+        "pieces"
+    ]
+};
+const bread = {
+    aisle: "Bakery/Bread",
+    categoryPath: [
+        "bread"
+    ],
+    consistency: "solid",
+    id: 18064,
+    image: "white-bread.jpg",
+    meta: [],
+    name: "bread",
+    original: "bread",
+    originalName: "bread",
+    possibleUnits: 12["baguette"],
+    shoppingListUnits: [
+        "pieces"
+    ]
+};
+const zucchini = {
+    aisle: "Produce",
+    categoryPath: [
+        "summer squash",
+        "squash",
+        "vegetable"
+    ],
+    consistency: "solid",
+    id: 11477,
+    image: "zucchini.jpg",
+    meta: [],
+    name: "courgette",
+    original: "courgette",
+    originalName: "courgette",
+    possibleUnits: 9["cup"],
+    shoppingListUnits: [
+        "pieces"
+    ]
+};
+const state = {
+    currentIngredient: {},
+    fridgeIngredients: [],
+    recipes: [],
+    currentRecipe: {},
+    menu: [],
+    menuIngredients: [],
+    shoppingList: []
+};
+const loadAutocompleteInfo = async function(query) {
+    try {
+        // WORKING WITH THE API
+        const res = await fetch(`http://localhost:3000/autocomplete/${query}`);
+        const data = await res.json();
+        if (data.length === 0) throw new Error("No results found");
+        return data;
+    // WORKING LOCALLY
+    // return [
+    //   { name: 'apple' },
+    //   { name: 'bread' },
+    //   { name: 'zucchini' },
+    //   { name: 'apple cider' },
+    // ];
+    } catch (error) {
+        throw error;
+    }
+};
+const loadIngredientInfo = async function(name) {
+    try {
+        // Get ingredient ID based on its name
+        const res = await fetch(`http://localhost:3000/search/${name}`);
+        const data = await res.json();
+        if (data.results.length === 0) throw new Error();
+        const id = data.results[0].id;
+        // Get ingredient informations based on its ID
+        const response = await fetch(`http://localhost:3000/info/${id}`);
+        console.log("response:", response);
+        const info = await response.json();
+        if (!info.name) throw new Error("Something went wrong loading ingredient data");
+        state.currentIngredient = info;
+        state.currentIngredient.quantity = 1;
+        state.fridgeIngredients.push(info);
+        updateLocalStorageIngredients();
+    // WORKING LOCALLY
+    // if (name === 'apple') state.currentIngredient = apple;
+    // if (name === 'bread') state.currentIngredient = bread;
+    // if (name === 'zucchini') state.currentIngredient = zucchini;
+    // state.currentIngredient.quantity = 1;
+    // state.fridgeIngredients.push(state.currentIngredient);
+    // updateLocalStorageIngredients();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+const deleteIng = function(id) {
+    state.fridgeIngredients.pop((ing)=>ing.id === id);
+    updateLocalStorageIngredients();
+};
+const loadRecipesMyIng = async function() {
+    let ingredientsList = "";
+    state.fridgeIngredients.forEach((el)=>{
+        ingredientsList += `${el.name},+`;
+    });
+    ingredientsList = ingredientsList.slice(0, -2);
+    if (ingredientsList === "") return;
+    const res = await fetch(`http://localhost:3000/recipesByIng/${ingredientsList}`);
+    const data = await res.json();
+    state.recipes = data;
+    return data;
+// WORKING LOCALLY
+// const data = JSON.parse(window.localStorage.getItem('recipes'));
+// state.recipes = data;
+// return data;
+};
+const loadRecipesQuery = async function(query, diets, intolerances) {
+    if (query === "") query = undefined;
+    if (diets === "") diets = undefined;
+    if (intolerances === "") intolerances = undefined;
+    const res = await fetch(`http://localhost:3000/recipesByQuery/${query}/${diets}/${intolerances}`);
+    const data = await res.json();
+    state.recipes = data.results;
+    return data.results;
+// WORKING LOCALLY
+// const data = JSON.parse(window.localStorage.getItem('recipes'));
+// state.recipes = data;
+// return data;
+};
+const loadRecipeDetails = async function(id) {
+    const res = await fetch(`http://localhost:3000/recipeDetails/${id}`);
+    const data = await res.json();
+    state.currentRecipe = data;
+    updateLocalStorageCurrentRecipe();
+    console.log("\uD83D\uDCA5 load recipe details:", data);
+    return data;
+// WORKING LOCALLY
+// const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
+// return data;
+};
+const addRecipeToMenu = function() {
+    state.menu.push(state.currentRecipe);
+    updateLocalStorageMenu();
+};
+const addIngredientsToMenu = function() {
+    state.menuIngredients.push(...state.currentRecipe.extendedIngredients);
+    updateLocalStorageMenuIngredients();
+};
+const deleteRecipe = function(id) {
+    state.menu.pop((recipe)=>recipe.id === id);
+    updateLocalStorageMenu();
+};
+///////////////////// LOCAL STORAGE UPDATES //////////////////////
+const updateLocalStorageIngredients = function() {
+    window.localStorage.setItem("fridgeIngredients", JSON.stringify({
+        ...state.fridgeIngredients
+    }));
+};
+const updateLocalStorageCurrentRecipe = function() {
+    window.localStorage.setItem("currentRecipe", JSON.stringify({
+        ...state.currentRecipe
+    }));
+};
+const updateLocalStorageMenu = function() {
+    window.localStorage.setItem("menu", JSON.stringify({
+        ...state.menu
+    }));
+};
+const updateLocalStorageMenuIngredients = function() {
+    window.localStorage.setItem("menuIngredients", JSON.stringify({
+        ...state.menuIngredients
+    }));
+};
+const updateLocalStorageShoppingList = function() {};
+///////////////////// STATE INIT //////////////////////
+const init = function() {
+    const fridgeIngredients = localStorage.getItem("fridgeIngredients");
+    const menu = localStorage.getItem("menu");
+    const menuIngredients = localStorage.getItem("menuIngredients");
+    const shoppingList = localStorage.getItem("shoppingList");
+    if (fridgeIngredients) state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
+    if (menu) state.menu = Object.values(JSON.parse(menu));
+    if (menuIngredients) state.menuIngredients = Object.values(JSON.parse(menuIngredients));
+    if (shoppingList) state.shoppingList = Object.values(JSON.parse(shoppingList));
+    console.log("\uD83D\uDCA5 STATE", state);
+};
+init();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"90rdM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "controlRecipes", ()=>controlRecipes);
+parcelHelpers.export(exports, "handleRecipeDetailsFromSearch", ()=>handleRecipeDetailsFromSearch);
+parcelHelpers.export(exports, "handleSearchRecipes", ()=>handleSearchRecipes);
+var _recipesViewJs = require("../views/recipesView.js");
+var _recipesViewJsDefault = parcelHelpers.interopDefault(_recipesViewJs);
+var _modelJs = require("../model.js");
+var _recipeDetailsViewJs = require("../views/recipeDetailsView.js");
+var _recipeDetailsViewJsDefault = parcelHelpers.interopDefault(_recipeDetailsViewJs);
+function controlRecipes() {
+    (0, _recipesViewJsDefault.default).renderHTML();
+}
+async function handleRecipeDetailsFromSearch(id) {
+    const recipe = (0, _modelJs.state).recipes.find((el)=>+el.id === +id);
+    const recipeData = await (0, _modelJs.loadRecipeDetails)(recipe.id);
+    (0, _recipeDetailsViewJsDefault.default).renderHTML(recipeData, "recipes");
+}
+async function handleSearchRecipes(useOnlyMyIng, query, diets, intolerances) {
+    try {
+        if (useOnlyMyIng) {
+            const data = await (0, _modelJs.loadRecipesMyIng)();
+            (0, _recipesViewJsDefault.default).displayRecipes(data);
+        }
+        if (!useOnlyMyIng) {
+            if (!query) throw new Error("Please enter a query");
+            const data = await (0, _modelJs.loadRecipesQuery)(query, diets, intolerances);
+            (0, _recipesViewJsDefault.default).displayRecipes(data);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+},{"../views/recipesView.js":"iLzNb","../model.js":"Y4A21","../views/recipeDetailsView.js":"43bGi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bRC7z":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "controlMenu", ()=>controlMenu);
+parcelHelpers.export(exports, "handleRecipeDetailsFromMenu", ()=>handleRecipeDetailsFromMenu);
+parcelHelpers.export(exports, "handleDeleteRecipe", ()=>handleDeleteRecipe);
+var _menuViewJs = require("../views/menuView.js");
+var _menuViewJsDefault = parcelHelpers.interopDefault(_menuViewJs);
+var _modelJs = require("../model.js");
+var _recipeDetailsViewJs = require("../views/recipeDetailsView.js");
+var _recipeDetailsViewJsDefault = parcelHelpers.interopDefault(_recipeDetailsViewJs);
+function controlMenu() {
+    (0, _menuViewJsDefault.default).renderHTML((0, _modelJs.state).menu);
+}
+function handleRecipeDetailsFromMenu(id) {
+    const recipe = (0, _modelJs.state).menu.find((el)=>+el.id === +id);
+    (0, _recipeDetailsViewJsDefault.default).renderHTML(recipe, "menu");
+}
+function handleDeleteRecipe(id) {
+    const [recipe] = (0, _modelJs.state).menu.filter((el)=>el.id === id);
+    (0, _modelJs.deleteRecipe)(id);
+    (0, _menuViewJsDefault.default).removeRecipe(recipe.id);
+}
+
+},{"../views/menuView.js":"lg0TE","../model.js":"Y4A21","../views/recipeDetailsView.js":"43bGi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4OUPd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "controlShoppingList", ()=>controlShoppingList);
+parcelHelpers.export(exports, "handlePdf", ()=>handlePdf);
+var _shoppingListViewJs = require("../views/shoppingListView.js");
+var _shoppingListViewJsDefault = parcelHelpers.interopDefault(_shoppingListViewJs);
+var _modelJs = require("../model.js");
+function controlShoppingList() {
+    (0, _shoppingListViewJsDefault.default).renderHTML((0, _modelJs.state).menuIngredients);
+}
+function handlePdf() {
+    (0, _shoppingListViewJsDefault.default).generatePDF((0, _modelJs.state).menuIngredients);
+}
+
+},{"../views/shoppingListView.js":"eqBFd","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3e1LN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "controlDisplayRecipe", ()=>controlDisplayRecipe);
@@ -22969,20 +22981,6 @@ function handleAddToMenu(recipeId) {
     }
 }
 
-},{"../views/recipeDetailsView.js":"43bGi","../views/recipesView.js":"iLzNb","../views/menuView.js":"lg0TE","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"awzMj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function navigationListener(handler) {
-    // "handler" is handleNavigation
-    document.addEventListener("click", function(e) {
-        if (e.target.classList.contains("navbar__item")) // Handling click on navbar links
-        handler(e.target.dataset.link);
-        else if (e.target.classList.contains("header__logo")) // Handling click on navbar logo
-        handler("welcome");
-    });
-}
-exports.default = navigationListener;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["c9SPh","eABpW"], "eABpW", "parcelRequire2549")
+},{"../views/recipeDetailsView.js":"43bGi","../views/recipesView.js":"iLzNb","../views/menuView.js":"lg0TE","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["c9SPh","eABpW"], "eABpW", "parcelRequire2549")
 
 //# sourceMappingURL=index.9ac235f9.js.map

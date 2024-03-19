@@ -1,4 +1,5 @@
-import { API_URL, API_KEY } from './src/js/config.js';
+import { API_URL } from './src/js/config.js';
+import { API_KEY } from './.env';
 
 import fetch from 'node-fetch';
 import express from 'express';
