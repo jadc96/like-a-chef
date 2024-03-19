@@ -721,11 +721,7 @@ class Fridge extends (0, _viewJsDefault.default) {
                 if (e.target.classList.contains("searchbar__field")) {
                     document.querySelector(".autocomplete-list");
                     query = e.target.value;
-                    if (query === "") {
-                        console.log(this);
-                        this._clearAutocompleteList();
-                        return;
-                    }
+                    if (query === "") return;
                     if (query === previousQuery) return;
                     handler(query);
                     previousQuery = query;
@@ -801,9 +797,8 @@ class Fridge extends (0, _viewJsDefault.default) {
         // Handle submit by pressing 'Enter' key
         this._parentElement.addEventListener("submit", (function(e) {
             const input = this._parentElement.querySelector(".searchbar__field");
-            // if (!input) return;
-            // if (e.target.tagName.toLowerCase() === 'form') {
-            if (e.target.closest("form") === "recipe-search") {
+            if (!input) return;
+            if (e.target.tagName.toLowerCase() === "form") {
                 e.preventDefault();
                 if (input.value === "") return;
                 handler(input.value);
@@ -1101,8 +1096,8 @@ class RecipesView extends (0, _viewJsDefault.default) {
     /////////////////// LINKS ///////////////////
     navigationListener(handler) {
         this._parentElement.addEventListener("click", function(e) {
-            if (e.target.closest("div").classList.contains("go-to-fridge")) handler("fridge");
-            else if (e.target.closest("div").classList.contains("go-to-menu")) handler("menu");
+            if (e.target.closest("div")?.classList.contains("go-to-fridge")) handler("fridge");
+            else if (e.target.closest("div")?.classList.contains("go-to-menu")) handler("menu");
         });
     }
     ///////////////////////// RENDERING BASIC HTML /////////////////////////

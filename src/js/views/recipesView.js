@@ -185,9 +185,9 @@ class RecipesView extends View {
 
   navigationListener(handler) {
     this._parentElement.addEventListener('click', function (e) {
-      if (e.target.closest('div').classList.contains('go-to-fridge')) {
+      if (e.target.closest('div')?.classList.contains('go-to-fridge')) {
         handler('fridge');
-      } else if (e.target.closest('div').classList.contains('go-to-menu')) {
+      } else if (e.target.closest('div')?.classList.contains('go-to-menu')) {
         handler('menu');
       }
     });

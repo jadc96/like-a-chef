@@ -26,11 +26,8 @@ class Fridge extends View {
             document.querySelector('.autocomplete-list');
             query = e.target.value;
 
-            if (query === '') {
-              console.log(this);
-              this._clearAutocompleteList();
-              return;
-            }
+            if (query === '') return;
+
             if (query === previousQuery) return;
 
             handler(query);
@@ -148,10 +145,9 @@ class Fridge extends View {
       function (e) {
         const input = this._parentElement.querySelector('.searchbar__field');
 
-        // if (!input) return;
+        if (!input) return;
 
-        // if (e.target.tagName.toLowerCase() === 'form') {
-        if (e.target.closest('form') === 'recipe-search') {
+        if (e.target.tagName.toLowerCase() === 'form') {
           e.preventDefault();
           if (input.value === '') return;
           handler(input.value);
