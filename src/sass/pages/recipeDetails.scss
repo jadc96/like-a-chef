@@ -1,0 +1,153 @@
+.recipe-details {
+  width: 80%;
+  margin: auto;
+
+  h1 {
+    text-align: center;
+    padding: 1.5em 0 1em 0;
+  }
+}
+
+.back {
+  position: absolute;
+  top: 115px;
+  right: 10%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.recipe-details__img {
+  // display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 3px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 95%;
+  }
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  // width: 70%;
+  padding: 1em 0;
+  margin: auto;
+}
+
+.recipe-details__description {
+  margin-top: 7em;
+}
+
+.health {
+  float: left;
+  width: 200px;
+  padding: 1em 0;
+  margin: 1em 3em 1em 2em;
+  background: $primary-color-light;
+  border-radius: 20px;
+  // margin: auto;
+
+  h3 {
+    text-align: center;
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2em 0;
+
+    p {
+      // padding: 0 0.5em 0 0;
+    }
+  }
+}
+
+.summary {
+  h3,
+  p {
+    margin-left: 3em;
+    text-align: justify;
+    // padding: 1em;
+  }
+}
+
+.servings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    margin: 0 0.5em 0 0;
+  }
+}
+
+.recipe-details__ingredients,
+.recipe-details__instructions {
+  padding: 0.5em 0;
+}
+
+.recipe-details__ingredients-list {
+  padding: 0.5em 0;
+
+  li {
+    padding: 0.2em 0;
+  }
+}
+
+.recipe-details__instructions {
+  padding: 0.5em 0;
+}
+
+.recipe-details__instructions-text {
+  padding: 0.5em 0;
+
+  li {
+    padding: 0.2em 0;
+  }
+}
+
+///////////////////////// MEDIA QUERIES /////////////////////////
+
+@media screen and (max-width: 1200px) {
+  .recipe-details__img {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image {
+    display: flex;
+    justify-content: center;
+  }
+
+  .recipe-details__description {
+    margin-top: 2em;
+    margin-left: 0;
+
+    h3,
+    p {
+      margin-left: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .health {
+    margin: 25px 25px 25px 0;
+  }
+}

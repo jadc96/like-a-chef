@@ -1,0 +1,28 @@
+.btn {
+  cursor: pointer;
+  transition: all 0.7s;
+  background-color: white;
+  color: $primary-color-light;
+  padding: 0.7em 1em;
+  border: 1px solid $primary-color-light;
+  border-radius: 5px;
+
+  &:hover {
+    transition: all 0.7s;
+    background-color: $primary-color-dark;
+    color: white;
+    border: 1px solid $primary-color-dark;
+  }
+}
+
+.nav__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: fit-content;
+  cursor: pointer;
+
+  p {
+    padding: 0 5px;
+  }
+}

@@ -1,0 +1,25 @@
+.banner {
+  display: none;
+  background-color: $primary-color-light;
+  height: 18vh;
+  padding-left: 15vw;
+  display: flex;
+  align-items: baseline;
+  padding-bottom: 15px;
+  line-height: 18vh;
+  font-size: calc(1.5vw + 2vh);
+
+  h3 {
+    color: #453227;
+    letter-spacing: 0.1rem;
+  }
+
+  p {
+    // font-size: calc(1.5vw + 2vh);
+    font-weight: 100;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}

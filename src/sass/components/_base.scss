@@ -1,0 +1,31 @@
+$basic-font-color: '#617D98';
+$main-background: '#fcfcfc';
+$primary-color-dark: #99e0aad1;
+$primary-color-light: #d0f5df8f;
+$primary-color-darker: green;
+$secondary-color: rgba(250, 235, 215, 0.801);
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  // min-height: 100vh;
+  // display: flex;
+  // flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: $basic-font-color;
+}
+
+.container {
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
+
+li {
+  list-style: none;
+}

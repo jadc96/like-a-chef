@@ -1,0 +1,19 @@
+// Base
+@import 'components/base';
+
+// Pages
+@import 'pages/welcome';
+@import 'pages/fridge';
+@import 'pages/recipes';
+@import 'pages/recipeDetails';
+@import 'pages/menu';
+@import 'pages/shopping';
+
+// Components
+@import 'components/header';
+@import 'components/banner';
+@import 'components/footer';
+@import 'components/buttons';
+@import 'components/searchbar';
+@import 'components/card';
+@import 'components/recipe';

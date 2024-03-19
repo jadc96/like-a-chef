@@ -1,0 +1,57 @@
+.shopping-list {
+  width: 80%;
+  margin: auto;
+}
+
+.titles {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.aisle {
+  margin: 2em 0 1em 0;
+}
+
+.shopping-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  padding: 2rem 1rem;
+  border-radius: 5px;
+
+  .shopping__image {
+    mix-blend-mode: multiply;
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-left: 15%;
+    }
+  }
+
+  .shopping__title,
+  .shopping__amount,
+  .shopping__aisle {
+    text-align: center;
+    margin: auto;
+  }
+}
+
+///////////////////////// MEDIA QUERIES /////////////////////////
+
+@media screen and (max-width: 992px) {
+  .shopping__amount {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .shopping__image {
+    img {
+      display: none;
+    }
+  }
+}
