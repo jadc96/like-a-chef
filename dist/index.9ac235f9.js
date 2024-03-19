@@ -1218,6 +1218,9 @@ class RecipeDetailsView extends (0, _viewJsDefault.default) {
     }
     // Back to recipes or menu
     listenBackToList(handler) {
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape" && document.querySelector(".back")) handler(document.querySelector(".back").value);
+        });
         this._parentElement.addEventListener("click", function(e) {
             if (e.target.closest("button")?.classList.contains("back")) {
                 this.innerHTML = "";
@@ -1231,13 +1234,13 @@ class RecipeDetailsView extends (0, _viewJsDefault.default) {
               <img src="https://spoonacular.com/cdn/ingredients_100x100/${el.image}" alt="${el.name}" />
               <p>${el.original}</p>
             </li>`).join("");
-        const instructions = recipe.analyzedInstructions[0].steps.map((el)=>{
+        const instructions = recipe.analyzedInstructions[0] ? recipe.analyzedInstructions[0].steps.map((el)=>{
             return `
         <li>
           <p>Step ${el.number} - ${el.step}</p>
         </li>
         `;
-        }).join("");
+        }).join("") : "<p>No instructions given for this recipe...</p>";
         // prettier-ignore
         const markup = `
       <div class="recipe-details">
@@ -1301,7 +1304,7 @@ var _configJs = require("../config.js");
 class MenuView extends (0, _viewJsDefault.default) {
     displayRecipeListener(handler) {
         this._parentElement.addEventListener("click", function(e) {
-            if (e.target.closest("li")?.classList.contains("menu__recipe")) handler(e.target.closest("li").dataset.item);
+            if (e.target.closest("li")?.classList.contains("menu__recipe") && e.target.tagName !== "BUTTON") handler(e.target.closest("li").dataset.item);
         });
     }
     deleteListener(handler) {
@@ -1315,8 +1318,8 @@ class MenuView extends (0, _viewJsDefault.default) {
     /////////////////// LINKS ///////////////////
     navigationListener(handler) {
         this._parentElement.addEventListener("click", function(e) {
-            if (e.target.closest("div").classList.contains("go-to-recipes")) handler("recipes");
-            else if (e.target.closest("div").classList.contains("go-to-shopping")) handler("shopping");
+            if (e.target.closest("div")?.classList.contains("go-to-recipes")) handler("recipes");
+            else if (e.target.closest("div")?.classList.contains("go-to-shopping")) handler("shopping");
         });
     }
     /////////////////// RENDER HTML ///////////////////
@@ -1396,18 +1399,47 @@ class ShoppingViews extends (0, _viewJsDefault.default) {
     /////////////////// LINKS ///////////////////
     navigationListener(handler) {
         this._parentElement.addEventListener("click", function(e) {
-            if (e.target.closest("div").classList.contains("go-to-menu")) handler("menu");
+            if (e.target.closest("div")?.classList.contains("go-to-menu")) handler("menu");
         });
     }
     /////////////////// RENDER HTML ///////////////////
+    cleanData = function(menu) {
+        const allIngredients = menu.map((recipe)=>recipe.extendedIngredients);
+        let IDs = [];
+        // Filtering invalid data and duplicate ingredients
+        const uniqueIngredients = allIngredients.flat().filter((ing)=>{
+            if (ing.id === -1) return;
+            if (!IDs.includes(ing.id)) {
+                IDs.push(ing.id);
+                return ing;
+            }
+        });
+        let names = [];
+        let cleanNames = [];
+        const cleanData = uniqueIngredients.filter((ing)=>{
+            if (ing.nameClean && !cleanNames.includes(ing.nameClean)) {
+                cleanNames.push(ing.nameClean);
+                return ing;
+            } else if (!names.includes(ing.name)) {
+                names.push(ing.name);
+                return ing;
+            }
+        });
+        console.log("CLEAN NAMES", cleanNames);
+        console.log("NAMES", names);
+        console.log(cleanData);
+        // console.log(cleanData);
+        return cleanData;
+    };
     renderHTML(data) {
         const groups = this._regroupeByAisle(data);
         const ingList = Object.entries(groups).map(([aisle, ingredients])=>{
-            const list = ingredients.map((ing)=>`
+            const list = ingredients.map((ing)=>{
+                return `
             <div class="shopping-item" data-item="${ing.name}">
               <div class="shopping__image">
-                <img src="https://spoonacular.com/cdn/ingredients_100x100/${ing.image}" alt="${ing.name}"/>
-                <p>${ing.name[0].toUpperCase() + ing.name.slice(1).toLowerCase()}</p>
+                <img src="https://spoonacular.com/cdn/ingredients_100x100/${ing.image}" alt="${ing.nameClean || ing.name}"/>
+                <p>${ing.nameClean ? ing.nameClean[0].toUpperCase() + ing.nameClean.slice(1).toLowerCase() : ing.name[0]?.toUpperCase() + ing.name?.slice(1).toLowerCase()}</p>
               </div>
               <div class="shopping__amount">
                 <p>${ing.amount} ${ing.unit}</p>
@@ -1417,7 +1449,8 @@ class ShoppingViews extends (0, _viewJsDefault.default) {
               </div>
             </div>
             <hr />
-            `).join("");
+            `;
+            }).join("");
             return `<h3 class="aisle">${aisle.toUpperCase()}</h3><hr />${list}`;
         }).join("");
         const markup = `
@@ -22663,7 +22696,6 @@ parcelHelpers.export(exports, "loadRecipesMyIng", ()=>loadRecipesMyIng);
 parcelHelpers.export(exports, "loadRecipesQuery", ()=>loadRecipesQuery);
 parcelHelpers.export(exports, "loadRecipeDetails", ()=>loadRecipeDetails);
 parcelHelpers.export(exports, "addRecipeToMenu", ()=>addRecipeToMenu);
-parcelHelpers.export(exports, "addIngredientsToMenu", ()=>addIngredientsToMenu);
 parcelHelpers.export(exports, "deleteRecipe", ()=>deleteRecipe);
 const apple = {
     aisle: "Produce",
@@ -22729,30 +22761,38 @@ const state = {
 };
 const loadAutocompleteInfo = async function(query) {
     try {
+        // WORKING LOCALLY
+        // return [
+        //   { name: 'apple' },
+        //   { name: 'bread' },
+        //   { name: 'zucchini' },
+        //   { name: 'apple cider' },
+        // ];
         // WORKING WITH THE API
         const res = await fetch(`http://localhost:3000/autocomplete/${query}`);
         const data = await res.json();
         if (data.length === 0) throw new Error("No results found");
         return data;
-    // WORKING LOCALLY
-    // return [
-    //   { name: 'apple' },
-    //   { name: 'bread' },
-    //   { name: 'zucchini' },
-    //   { name: 'apple cider' },
-    // ];
     } catch (error) {
         throw error;
     }
 };
 const loadIngredientInfo = async function(name) {
     try {
+        // WORKING LOCALLY
+        // if (name === 'apple') state.currentIngredient = apple;
+        // if (name === 'bread') state.currentIngredient = bread;
+        // if (name === 'zucchini') state.currentIngredient = zucchini;
+        // state.currentIngredient.quantity = 1;
+        // state.fridgeIngredients.push(state.currentIngredient);
+        // updateLocalStorageIngredients();
+        // WORKING WITH THE API
         // Get ingredient ID based on its name
         const res = await fetch(`http://localhost:3000/search/${name}`);
         const data = await res.json();
         if (data.results.length === 0) throw new Error();
         const id = data.results[0].id;
-        // Get ingredient informations based on its ID
+        // // Get ingredient informations based on its ID
         const response = await fetch(`http://localhost:3000/info/${id}`);
         console.log("response:", response);
         const info = await response.json();
@@ -22761,13 +22801,6 @@ const loadIngredientInfo = async function(name) {
         state.currentIngredient.quantity = 1;
         state.fridgeIngredients.push(info);
         updateLocalStorageIngredients();
-    // WORKING LOCALLY
-    // if (name === 'apple') state.currentIngredient = apple;
-    // if (name === 'bread') state.currentIngredient = bread;
-    // if (name === 'zucchini') state.currentIngredient = zucchini;
-    // state.currentIngredient.quantity = 1;
-    // state.fridgeIngredients.push(state.currentIngredient);
-    // updateLocalStorageIngredients();
     } catch (error) {
         console.error(error);
         throw error;
@@ -22778,6 +22811,12 @@ const deleteIng = function(id) {
     updateLocalStorageIngredients();
 };
 const loadRecipesMyIng = async function() {
+    // WORKING LOCALLY
+    // console.log('hey');
+    // const data = JSON.parse(window.localStorage.getItem('recipes'));
+    // state.recipes = data;
+    // console.log(data);
+    // return data;
     let ingredientsList = "";
     state.fridgeIngredients.forEach((el)=>{
         ingredientsList += `${el.name},+`;
@@ -22787,43 +22826,42 @@ const loadRecipesMyIng = async function() {
     const res = await fetch(`http://localhost:3000/recipesByIng/${ingredientsList}`);
     const data = await res.json();
     state.recipes = data;
+    // BEFORE WORKING LOCALLY
+    window.localStorage.setItem("recipes", JSON.stringify(data));
     return data;
-// WORKING LOCALLY
-// const data = JSON.parse(window.localStorage.getItem('recipes'));
-// state.recipes = data;
-// return data;
 };
 const loadRecipesQuery = async function(query, diets, intolerances) {
+    // WORKING LOCALLY
+    // const data = JSON.parse(window.localStorage.getItem('searchedRecipes'));
+    // results = data.results;
+    // return results;
     if (query === "") query = undefined;
     if (diets === "") diets = undefined;
     if (intolerances === "") intolerances = undefined;
     const res = await fetch(`http://localhost:3000/recipesByQuery/${query}/${diets}/${intolerances}`);
     const data = await res.json();
     state.recipes = data.results;
+    // BEFORE WORKING LOCALLY
+    window.localStorage.setItem("searchedRecipes", JSON.stringify(data));
     return data.results;
-// WORKING LOCALLY
-// const data = JSON.parse(window.localStorage.getItem('recipes'));
-// state.recipes = data;
-// return data;
 };
 const loadRecipeDetails = async function(id) {
+    // WORKING LOCALLY
+    // const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
+    // return data;
+    // WORKING WITH THE API
     const res = await fetch(`http://localhost:3000/recipeDetails/${id}`);
     const data = await res.json();
     state.currentRecipe = data;
     updateLocalStorageCurrentRecipe();
     console.log("\uD83D\uDCA5 load recipe details:", data);
+    // BEFORE WORKING LOCALLY
+    window.localStorage.setItem("recipeDetails", JSON.stringify(data));
     return data;
-// WORKING LOCALLY
-// const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
-// return data;
 };
 const addRecipeToMenu = function() {
     state.menu.push(state.currentRecipe);
     updateLocalStorageMenu();
-};
-const addIngredientsToMenu = function() {
-    state.menuIngredients.push(...state.currentRecipe.extendedIngredients);
-    updateLocalStorageMenuIngredients();
 };
 const deleteRecipe = function(id) {
     state.menu.pop((recipe)=>recipe.id === id);
@@ -22845,22 +22883,14 @@ const updateLocalStorageMenu = function() {
         ...state.menu
     }));
 };
-const updateLocalStorageMenuIngredients = function() {
-    window.localStorage.setItem("menuIngredients", JSON.stringify({
-        ...state.menuIngredients
-    }));
-};
-const updateLocalStorageShoppingList = function() {};
 ///////////////////// STATE INIT //////////////////////
 const init = function() {
     const fridgeIngredients = localStorage.getItem("fridgeIngredients");
     const menu = localStorage.getItem("menu");
     const menuIngredients = localStorage.getItem("menuIngredients");
-    const shoppingList = localStorage.getItem("shoppingList");
     if (fridgeIngredients) state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
     if (menu) state.menu = Object.values(JSON.parse(menu));
     if (menuIngredients) state.menuIngredients = Object.values(JSON.parse(menuIngredients));
-    if (shoppingList) state.shoppingList = Object.values(JSON.parse(shoppingList));
     console.log("\uD83D\uDCA5 STATE", state);
 };
 init();
@@ -22880,8 +22910,12 @@ function controlRecipes() {
     (0, _recipesViewJsDefault.default).renderHTML();
 }
 async function handleRecipeDetailsFromSearch(id) {
+    console.log(id);
     const recipe = (0, _modelJs.state).recipes.find((el)=>+el.id === +id);
+    console.log(recipe);
     const recipeData = await (0, _modelJs.loadRecipeDetails)(recipe.id);
+    // WORKING LOCALLY
+    // const recipeData = await loadRecipeDetails();
     (0, _recipeDetailsViewJsDefault.default).renderHTML(recipeData, "recipes");
 }
 async function handleSearchRecipes(useOnlyMyIng, query, diets, intolerances) {
@@ -22933,7 +22967,8 @@ var _shoppingListViewJs = require("../views/shoppingListView.js");
 var _shoppingListViewJsDefault = parcelHelpers.interopDefault(_shoppingListViewJs);
 var _modelJs = require("../model.js");
 function controlShoppingList() {
-    (0, _shoppingListViewJsDefault.default).renderHTML((0, _modelJs.state).menuIngredients);
+    const cleanData = (0, _shoppingListViewJsDefault.default).cleanData((0, _modelJs.state).menu);
+    (0, _shoppingListViewJsDefault.default).renderHTML(cleanData);
 }
 function handlePdf() {
     (0, _shoppingListViewJsDefault.default).generatePDF((0, _modelJs.state).menuIngredients);
@@ -22956,16 +22991,11 @@ async function controlDisplayRecipe(recipeData, origin) {
     (0, _recipeDetailsViewJsDefault.default).renderHTML(recipeData, origin);
 }
 function handleBackToList(origin) {
-    console.log(origin);
     if (origin === "recipes") {
-        console.log("c est ici");
         (0, _recipesViewJsDefault.default).renderHTML();
         (0, _recipesViewJsDefault.default).displayRecipes((0, _modelJs.state).recipes);
     }
-    if (origin === "menu") {
-        console.log("c est l\xe0");
-        (0, _menuViewJsDefault.default).renderHTML((0, _modelJs.state).menu);
-    }
+    if (origin === "menu") (0, _menuViewJsDefault.default).renderHTML((0, _modelJs.state).menu);
 }
 function handleAddToMenu(recipeId) {
     try {
@@ -22975,7 +23005,7 @@ function handleAddToMenu(recipeId) {
             return;
         }
         (0, _modelJs.addRecipeToMenu)();
-        (0, _modelJs.addIngredientsToMenu)();
+        (0, _modelJs.addIngredientsToShoppingList)();
     } catch (error) {
         console.log(error);
     }

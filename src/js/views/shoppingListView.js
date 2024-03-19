@@ -52,7 +52,7 @@ class ShoppingViews extends View {
 
   navigationListener(handler) {
     this._parentElement.addEventListener('click', function (e) {
-      if (e.target.closest('div').classList.contains('go-to-menu')) {
+      if (e.target.closest('div')?.classList.contains('go-to-menu')) {
         handler('menu');
       }
     });
@@ -60,22 +60,61 @@ class ShoppingViews extends View {
 
   /////////////////// RENDER HTML ///////////////////
 
+  cleanData = function (menu) {
+    const allIngredients = menu.map(recipe => recipe.extendedIngredients);
+
+    let IDs = [];
+
+    // Filtering invalid data and duplicate ingredients
+    const uniqueIngredients = allIngredients.flat().filter(ing => {
+      if (ing.id === -1) return;
+
+      if (!IDs.includes(ing.id)) {
+        IDs.push(ing.id);
+        return ing;
+      }
+    });
+
+    let names = [];
+    let cleanNames = [];
+
+    const cleanData = uniqueIngredients.filter(ing => {
+      if (ing.nameClean && !cleanNames.includes(ing.nameClean)) {
+        cleanNames.push(ing.nameClean);
+        return ing;
+      } else if (!names.includes(ing.name)) {
+        names.push(ing.name);
+        return ing;
+      }
+    });
+
+    console.log('CLEAN NAMES', cleanNames);
+    console.log('NAMES', names);
+    console.log(cleanData);
+
+    // console.log(cleanData);
+    return cleanData;
+  };
+
   renderHTML(data) {
     const groups = this._regroupeByAisle(data);
 
     const ingList = Object.entries(groups)
       .map(([aisle, ingredients]) => {
         const list = ingredients
-          .map(
-            ing =>
-              `
+          .map(ing => {
+            return `
             <div class="shopping-item" data-item="${ing.name}">
               <div class="shopping__image">
                 <img src="https://spoonacular.com/cdn/ingredients_100x100/${
                   ing.image
-                }" alt="${ing.name}"/>
+                }" alt="${ing.nameClean || ing.name}"/>
                 <p>${
-                  ing.name[0].toUpperCase() + ing.name.slice(1).toLowerCase()
+                  ing.nameClean
+                    ? ing.nameClean[0].toUpperCase() +
+                      ing.nameClean.slice(1).toLowerCase()
+                    : ing.name[0]?.toUpperCase() +
+                      ing.name?.slice(1).toLowerCase()
                 }</p>
               </div>
               <div class="shopping__amount">
@@ -86,8 +125,8 @@ class ShoppingViews extends View {
               </div>
             </div>
             <hr />
-            `
-          )
+            `;
+          })
           .join('');
         return `<h3 class="aisle">${aisle.toUpperCase()}</h3><hr />${list}`;
       })

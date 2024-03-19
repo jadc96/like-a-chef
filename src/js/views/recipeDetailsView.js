@@ -12,6 +12,12 @@ class RecipeDetailsView extends View {
 
   // Back to recipes or menu
   listenBackToList(handler) {
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.querySelector('.back')) {
+        handler(document.querySelector('.back').value);
+      }
+    });
+
     this._parentElement.addEventListener('click', function (e) {
       if (e.target.closest('button')?.classList.contains('back')) {
         this.innerHTML = '';
@@ -31,15 +37,18 @@ class RecipeDetailsView extends View {
             </li>`
       )
       .join('');
-    const instructions = recipe.analyzedInstructions[0].steps
-      .map(el => {
-        return `
+
+    const instructions = recipe.analyzedInstructions[0]
+      ? recipe.analyzedInstructions[0].steps
+          .map(el => {
+            return `
         <li>
           <p>Step ${el.number} - ${el.step}</p>
         </li>
         `;
-      })
-      .join('');
+          })
+          .join('')
+      : '<p>No instructions given for this recipe...</p>';
 
     // prettier-ignore
     const markup = `

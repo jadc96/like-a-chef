@@ -12,8 +12,13 @@ export function controlRecipes() {
 }
 
 export async function handleRecipeDetailsFromSearch(id) {
+  console.log(id);
   const recipe = state.recipes.find(el => +el.id === +id);
+  console.log(recipe);
   const recipeData = await loadRecipeDetails(recipe.id);
+
+  // WORKING LOCALLY
+  // const recipeData = await loadRecipeDetails();
 
   recipeDetailsView.renderHTML(recipeData, 'recipes');
 }

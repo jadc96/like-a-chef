@@ -4,7 +4,10 @@ import { ARROW_LEFT, ARROW_RIGHT } from '../config.js';
 class MenuView extends View {
   displayRecipeListener(handler) {
     this._parentElement.addEventListener('click', function (e) {
-      if (e.target.closest('li')?.classList.contains('menu__recipe')) {
+      if (
+        e.target.closest('li')?.classList.contains('menu__recipe') &&
+        e.target.tagName !== 'BUTTON'
+      ) {
         handler(e.target.closest('li').dataset.item);
       }
     });
@@ -26,9 +29,11 @@ class MenuView extends View {
 
   navigationListener(handler) {
     this._parentElement.addEventListener('click', function (e) {
-      if (e.target.closest('div').classList.contains('go-to-recipes')) {
+      if (e.target.closest('div')?.classList.contains('go-to-recipes')) {
         handler('recipes');
-      } else if (e.target.closest('div').classList.contains('go-to-shopping')) {
+      } else if (
+        e.target.closest('div')?.classList.contains('go-to-shopping')
+      ) {
         handler('shopping');
       }
     });

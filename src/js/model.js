@@ -84,13 +84,6 @@ export const state = {
 
 export const loadAutocompleteInfo = async function (query) {
   try {
-    // WORKING WITH THE API
-    const res = await fetch(`http://localhost:3000/autocomplete/${query}`);
-    const data = await res.json();
-
-    if (data.length === 0) throw new Error('No results found');
-
-    return data;
     // WORKING LOCALLY
     // return [
     //   { name: 'apple' },
@@ -98,6 +91,14 @@ export const loadAutocompleteInfo = async function (query) {
     //   { name: 'zucchini' },
     //   { name: 'apple cider' },
     // ];
+
+    // WORKING WITH THE API
+    const res = await fetch(`http://localhost:3000/autocomplete/${query}`);
+    const data = await res.json();
+
+    if (data.length === 0) throw new Error('No results found');
+
+    return data;
   } catch (error) {
     throw error;
   }
@@ -105,6 +106,15 @@ export const loadAutocompleteInfo = async function (query) {
 
 export const loadIngredientInfo = async function (name) {
   try {
+    // WORKING LOCALLY
+    // if (name === 'apple') state.currentIngredient = apple;
+    // if (name === 'bread') state.currentIngredient = bread;
+    // if (name === 'zucchini') state.currentIngredient = zucchini;
+    // state.currentIngredient.quantity = 1;
+    // state.fridgeIngredients.push(state.currentIngredient);
+    // updateLocalStorageIngredients();
+
+    // WORKING WITH THE API
     // Get ingredient ID based on its name
     const res = await fetch(`http://localhost:3000/search/${name}`);
     const data = await res.json();
@@ -113,7 +123,7 @@ export const loadIngredientInfo = async function (name) {
 
     const id = data.results[0].id;
 
-    // Get ingredient informations based on its ID
+    // // Get ingredient informations based on its ID
     const response = await fetch(`http://localhost:3000/info/${id}`);
     console.log('response:', response);
     const info = await response.json();
@@ -125,14 +135,6 @@ export const loadIngredientInfo = async function (name) {
     state.currentIngredient.quantity = 1;
     state.fridgeIngredients.push(info);
     updateLocalStorageIngredients();
-
-    // WORKING LOCALLY
-    // if (name === 'apple') state.currentIngredient = apple;
-    // if (name === 'bread') state.currentIngredient = bread;
-    // if (name === 'zucchini') state.currentIngredient = zucchini;
-    // state.currentIngredient.quantity = 1;
-    // state.fridgeIngredients.push(state.currentIngredient);
-    // updateLocalStorageIngredients();
   } catch (error) {
     console.error(error);
     throw error;
@@ -145,6 +147,13 @@ export const deleteIng = function (id) {
 };
 
 export const loadRecipesMyIng = async function () {
+  // WORKING LOCALLY
+  // console.log('hey');
+  // const data = JSON.parse(window.localStorage.getItem('recipes'));
+  // state.recipes = data;
+  // console.log(data);
+  // return data;
+
   let ingredientsList = '';
   state.fridgeIngredients.forEach(el => {
     ingredientsList += `${el.name},+`;
@@ -159,15 +168,19 @@ export const loadRecipesMyIng = async function () {
   const data = await res.json();
   state.recipes = data;
 
-  return data;
+  // BEFORE WORKING LOCALLY
   window.localStorage.setItem('recipes', JSON.stringify(data));
-  // WORKING LOCALLY
-  // const data = JSON.parse(window.localStorage.getItem('recipes'));
-  // state.recipes = data;
-  // return data;
+
+  return data;
 };
 
 export const loadRecipesQuery = async function (query, diets, intolerances) {
+  // WORKING LOCALLY
+  // const data = JSON.parse(window.localStorage.getItem('searchedRecipes'));
+  // results = data.results;
+
+  // return results;
+
   if (query === '') query = undefined;
   if (diets === '') diets = undefined;
   if (intolerances === '') intolerances = undefined;
@@ -178,36 +191,32 @@ export const loadRecipesQuery = async function (query, diets, intolerances) {
   const data = await res.json();
   state.recipes = data.results;
 
+  // BEFORE WORKING LOCALLY
+  window.localStorage.setItem('searchedRecipes', JSON.stringify(data));
+
   return data.results;
-  window.localStorage.setItem('recipes', JSON.stringify(data));
-  // WORKING LOCALLY
-  // const data = JSON.parse(window.localStorage.getItem('recipes'));
-  // state.recipes = data;
-  // return data;
 };
 
 export const loadRecipeDetails = async function (id) {
+  // WORKING LOCALLY
+  // const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
+  // return data;
+
+  // WORKING WITH THE API
   const res = await fetch(`http://localhost:3000/recipeDetails/${id}`);
   const data = await res.json();
   state.currentRecipe = data;
   updateLocalStorageCurrentRecipe();
   console.log('💥 load recipe details:', data);
 
-  return data;
+  // BEFORE WORKING LOCALLY
   window.localStorage.setItem('recipeDetails', JSON.stringify(data));
-  // WORKING LOCALLY
-  // const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
-  // return data;
+  return data;
 };
 
 export const addRecipeToMenu = function () {
   state.menu.push(state.currentRecipe);
   updateLocalStorageMenu();
-};
-
-export const addIngredientsToMenu = function () {
-  state.menuIngredients.push(...state.currentRecipe.extendedIngredients);
-  updateLocalStorageMenuIngredients();
 };
 
 export const deleteRecipe = function (id) {
@@ -235,30 +244,18 @@ const updateLocalStorageMenu = function () {
   window.localStorage.setItem('menu', JSON.stringify({ ...state.menu }));
 };
 
-const updateLocalStorageMenuIngredients = function () {
-  window.localStorage.setItem(
-    'menuIngredients',
-    JSON.stringify({ ...state.menuIngredients })
-  );
-};
-
-const updateLocalStorageShoppingList = function () {};
-
 ///////////////////// STATE INIT //////////////////////
 
 const init = function () {
   const fridgeIngredients = localStorage.getItem('fridgeIngredients');
   const menu = localStorage.getItem('menu');
   const menuIngredients = localStorage.getItem('menuIngredients');
-  const shoppingList = localStorage.getItem('shoppingList');
 
   if (fridgeIngredients)
     state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
   if (menu) state.menu = Object.values(JSON.parse(menu));
   if (menuIngredients)
     state.menuIngredients = Object.values(JSON.parse(menuIngredients));
-  if (shoppingList)
-    state.shoppingList = Object.values(JSON.parse(shoppingList));
 
   console.log('💥 STATE', state);
 };
