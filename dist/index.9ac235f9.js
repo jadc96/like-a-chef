@@ -22756,8 +22756,7 @@ const state = {
     recipes: [],
     currentRecipe: {},
     menu: [],
-    menuIngredients: [],
-    shoppingList: []
+    menuIngredients: []
 };
 const loadAutocompleteInfo = async function(query) {
     try {
@@ -23005,7 +23004,6 @@ function handleAddToMenu(recipeId) {
             return;
         }
         (0, _modelJs.addRecipeToMenu)();
-        (0, _modelJs.addIngredientsToShoppingList)();
     } catch (error) {
         console.log(error);
     }

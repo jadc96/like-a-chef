@@ -2,11 +2,7 @@ import recipeDetailsView from '../views/recipeDetailsView.js';
 import recipesView from '../views/recipesView.js';
 import menuView from '../views/menuView.js';
 
-import {
-  state,
-  addRecipeToMenu,
-  addIngredientsToShoppingList,
-} from '../model.js';
+import { state, addRecipeToMenu } from '../model.js';
 
 export async function controlDisplayRecipe(recipeData, origin) {
   recipeDetailsView.renderHTML(recipeData, origin);
@@ -32,7 +28,6 @@ export function handleAddToMenu(recipeId) {
     }
 
     addRecipeToMenu();
-    addIngredientsToShoppingList();
   } catch (error) {
     console.log(error);
   }

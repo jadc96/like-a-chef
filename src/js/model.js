@@ -77,7 +77,6 @@ export const state = {
   currentRecipe: {},
   menu: [],
   menuIngredients: [],
-  shoppingList: [],
 };
 
 ///////////////////// SERVER CALLS //////////////////////
