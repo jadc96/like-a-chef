@@ -21,7 +21,6 @@ class RecipeDetailsView extends View {
     this._parentElement.addEventListener('click', function (e) {
       if (e.target.closest('button')?.classList.contains('back')) {
         this.innerHTML = '';
-        console.log(e.target.closest('button').value);
         handler(e.target.closest('button').value);
       }
     });

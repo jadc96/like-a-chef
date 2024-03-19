@@ -4,10 +4,12 @@ import menuView from '../views/menuView.js';
 
 import { state, addRecipeToMenu } from '../model.js';
 
+// Display the details of a single recipe
 export async function controlDisplayRecipe(recipeData, origin) {
   recipeDetailsView.renderHTML(recipeData, origin);
 }
 
+// Get back to previous page (either the search list or the menu list)
 export function handleBackToList(origin) {
   if (origin === 'recipes') {
     recipesView.renderHTML();
@@ -18,6 +20,7 @@ export function handleBackToList(origin) {
   }
 }
 
+// Add a recipe to the menu
 export function handleAddToMenu(recipeId) {
   try {
     if (state.currentRecipe.id !== recipeId) throw new Error();
@@ -29,6 +32,6 @@ export function handleAddToMenu(recipeId) {
 
     addRecipeToMenu();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

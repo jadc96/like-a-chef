@@ -76,7 +76,6 @@ export const state = {
   recipes: [],
   currentRecipe: {},
   menu: [],
-  menuIngredients: [],
 };
 
 ///////////////////// SERVER CALLS //////////////////////
@@ -124,7 +123,6 @@ export const loadIngredientInfo = async function (name) {
 
     // // Get ingredient informations based on its ID
     const response = await fetch(`http://localhost:3000/info/${id}`);
-    console.log('response:', response);
     const info = await response.json();
 
     if (!info.name)
@@ -147,10 +145,8 @@ export const deleteIng = function (id) {
 
 export const loadRecipesMyIng = async function () {
   // WORKING LOCALLY
-  // console.log('hey');
   // const data = JSON.parse(window.localStorage.getItem('recipes'));
   // state.recipes = data;
-  // console.log(data);
   // return data;
 
   let ingredientsList = '';
@@ -206,7 +202,6 @@ export const loadRecipeDetails = async function (id) {
   const data = await res.json();
   state.currentRecipe = data;
   updateLocalStorageCurrentRecipe();
-  console.log('💥 load recipe details:', data);
 
   // BEFORE WORKING LOCALLY
   window.localStorage.setItem('recipeDetails', JSON.stringify(data));
@@ -248,13 +243,10 @@ const updateLocalStorageMenu = function () {
 const init = function () {
   const fridgeIngredients = localStorage.getItem('fridgeIngredients');
   const menu = localStorage.getItem('menu');
-  const menuIngredients = localStorage.getItem('menuIngredients');
 
   if (fridgeIngredients)
     state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
   if (menu) state.menu = Object.values(JSON.parse(menu));
-  if (menuIngredients)
-    state.menuIngredients = Object.values(JSON.parse(menuIngredients));
 
   console.log('💥 STATE', state);
 };

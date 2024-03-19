@@ -561,8 +561,8 @@ function hmrAccept(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _navigationListener = require("../views/navigationListener");
 var _navigationListenerDefault = parcelHelpers.interopDefault(_navigationListener);
-var _welcomeView = require("../views/welcomeView");
-var _welcomeViewDefault = parcelHelpers.interopDefault(_welcomeView);
+var _homeView = require("../views/homeView");
+var _homeViewDefault = parcelHelpers.interopDefault(_homeView);
 var _fridgeView = require("../views/fridgeView");
 var _fridgeViewDefault = parcelHelpers.interopDefault(_fridgeView);
 var _recipesView = require("../views/recipesView");
@@ -580,13 +580,12 @@ var _recipesController = require("./recipesController");
 var _recipeDetailsController = require("./recipeDetailsController");
 var _menuController = require("./menuController");
 var _shoppingListController = require("./shoppingListController");
-var _welcomeController = require("./welcomeController");
+var _homeController = require("./homeController");
+// Load event listeners only once
 const init = function() {
-    // Setting event listeners on nav links
     (0, _navigationListenerDefault.default)((0, _navigationController.handleNavigation));
-    // Loading all event listeners just once
-    (0, _welcomeViewDefault.default).loadingListener();
-    (0, _welcomeViewDefault.default).navigationListener((0, _navigationController.handleNavigation));
+    (0, _homeViewDefault.default).loadingListener();
+    (0, _homeViewDefault.default).navigationListener((0, _navigationController.handleNavigation));
     (0, _fridgeViewDefault.default).autocompleteListener(_fridgeController.handleAutocomplete);
     (0, _fridgeViewDefault.default).suggestionsListener();
     (0, _fridgeViewDefault.default).quitAutocompleteListener();
@@ -606,21 +605,18 @@ const init = function() {
     (0, _menuViewDefault.default).navigationListener((0, _navigationController.handleNavigation));
     (0, _shoppingListViewDefault.default).generatePdfListener(_shoppingListController.handlePdf);
     (0, _shoppingListViewDefault.default).navigationListener((0, _navigationController.handleNavigation));
-    // Calling controller of welcome page
-    (0, _welcomeController.controlWelcome)();
+    // Calling controller of the home page
+    (0, _homeController.controlHome)();
 };
 init();
 
-},{"../views/navigationListener":"awzMj","../views/welcomeView":"kga6f","../views/fridgeView":"d42xV","../views/recipesView":"iLzNb","../views/recipeDetailsView":"43bGi","../views/menuView":"lg0TE","../views/shoppingListView":"eqBFd","./navigationController":"eT0wj","./fridgeController":"1lNql","./recipesController":"90rdM","./recipeDetailsController":"3e1LN","./menuController":"bRC7z","./shoppingListController":"4OUPd","./welcomeController":"64iI8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"awzMj":[function(require,module,exports) {
+},{"../views/navigationListener":"awzMj","../views/fridgeView":"d42xV","../views/recipesView":"iLzNb","../views/recipeDetailsView":"43bGi","../views/menuView":"lg0TE","../views/shoppingListView":"eqBFd","./navigationController":"eT0wj","./fridgeController":"1lNql","./recipesController":"90rdM","./recipeDetailsController":"3e1LN","./menuController":"bRC7z","./shoppingListController":"4OUPd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../views/homeView":"kxSlf","./homeController":"8JouN"}],"awzMj":[function(require,module,exports) {
+// Handle click on nav link or logo
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function navigationListener(handler) {
-    // "handler" is handleNavigation
     document.addEventListener("click", function(e) {
-        if (e.target.classList.contains("navbar__item")) // Handling click on navbar links
-        handler(e.target.dataset.link);
-        else if (e.target.classList.contains("header__logo")) // Handling click on navbar logo
-        handler("welcome");
+        if (e.target.classList.contains("navbar__item")) handler(e.target.dataset.link);
     });
 }
 exports.default = navigationListener;
@@ -655,54 +651,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"kga6f":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _viewJs = require("./view.js");
-var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
-class WelcomeView extends (0, _viewJsDefault.default) {
-    loadingListener() {
-        window.addEventListener("load", this.renderHTML.bind(this));
-    }
-    navigationListener(handler) {
-        this._parentElement.addEventListener("click", function(e) {
-            if (e.target.classList.contains("start")) handler("fridge");
-        });
-    }
-    renderHTML() {
-        const markup = `
-      <div class="welcome-content">
-        <h1>managing meals and groceries</h1>
-        <h2>the easy way</h2>
-        <button class="btn start">Get started!</button>
-      </div>
-    `;
-        this._clearMarkup();
-        this._parentElement.insertAdjacentHTML("afterbegin", markup);
-        this._clearHighlightedNavLink();
-    }
-}
-exports.default = new WelcomeView();
-
-},{"./view.js":"bWlJ9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWlJ9":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-class View {
-    _parentElement = document.querySelector(".page-content");
-    _clearMarkup() {
-        this._parentElement.innerHTML = "";
-    }
-    _clearHighlightedNavLink() {
-        const navItems = document.querySelectorAll(".navbar__item");
-        navItems.forEach((item)=>item.classList.remove("current-page"));
-    }
-    _highlightCurrentPageNavLink(NavLinkNumber) {
-        document.querySelector(`.navbar p:nth-child(${NavLinkNumber})`).classList.add("current-page");
-    }
-}
-exports.default = View;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d42xV":[function(require,module,exports) {
+},{}],"d42xV":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _configJs = require("../config.js");
@@ -826,7 +775,6 @@ class Fridge extends (0, _viewJsDefault.default) {
         return "all";
     }
     checkIngredientFormat(data, fridgeIngredients) {
-        // console.log(data);
         // Check if the ingredient is already in the list
         // NB : sometimes the API autocomplete returns the singular form of the ingredient, while the object name has the plural form, e.g. 'apple' instead of 'apples', hence the 's' or 'es' added to data
         if (fridgeIngredients.some((el)=>el.name === data || el.name === data + "s" || el.name === data + "es")) {
@@ -837,7 +785,6 @@ class Fridge extends (0, _viewJsDefault.default) {
     }
     ///////////////// DISPLAYING NEW INGREDIENT /////////////////
     displayIngredient(data) {
-        console.log("\uD83D\uDCA5 display ingredient:", data);
         const list = document.querySelector(".cards-list");
         const markup = `
     <div class="card" data-item="${data.name}">
@@ -875,10 +822,7 @@ class Fridge extends (0, _viewJsDefault.default) {
     }
     deleteIngredientListener(handler) {
         this._parentElement.addEventListener("click", function(e) {
-            if (e.target.closest("button")?.classList.contains("delete-ing")) {
-                console.log(e.target.closest("button").value);
-                handler(+e.target.closest("button").value);
-            }
+            if (e.target.closest("button")?.classList.contains("delete-ing")) handler(+e.target.closest("button").value);
         });
     }
     removeIngredient(name) {
@@ -887,7 +831,7 @@ class Fridge extends (0, _viewJsDefault.default) {
     /////////////////// LINKS ///////////////////
     navigationListener(handler) {
         this._parentElement.addEventListener("click", function(e) {
-            if (e.target.closest("div").classList.contains("go-to-home")) handler("welcome");
+            if (e.target.closest("div").classList.contains("go-to-home")) handler("home");
             else if (e.target.closest("div").classList.contains("go-to-recipes")) handler("recipes");
         });
     }
@@ -984,6 +928,24 @@ const LIKE = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fil
 const RED_CROSS = `<svg style="color: red" height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"></circle><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6" fill="red"></path><path d="m5.5 5.5 6 6" fill="red"></path></g></g></svg>`;
 const GREEN_CHECK = `<svg style="color: rgb(34, 186, 63);" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"> <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" fill="#22ba3f"></path> <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" fill="#22ba3f"></path> </svg>`;
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWlJ9":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class View {
+    _parentElement = document.querySelector(".page-content");
+    _clearMarkup() {
+        this._parentElement.innerHTML = "";
+    }
+    _clearHighlightedNavLink() {
+        const navItems = document.querySelectorAll(".navbar__item");
+        navItems.forEach((item)=>item.classList.remove("current-page"));
+    }
+    _highlightCurrentPageNavLink(NavLinkNumber) {
+        document.querySelector(`.navbar p:nth-child(${NavLinkNumber})`).classList.add("current-page");
+    }
+}
+exports.default = View;
+
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iLzNb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -1047,7 +1009,6 @@ class RecipesView extends (0, _viewJsDefault.default) {
         }).bind(this));
         document.addEventListener("keydown", (function(e) {
             if (e.key === "Escape") {
-                console.log("ok");
                 this._parentElement.querySelectorAll(".dropdown-list").forEach((list)=>list.classList.add("hidden"));
                 this._parentElement.querySelectorAll(".dropdown-btn").forEach((btn)=>{
                     btn.removeChild(btn.lastChild);
@@ -1069,7 +1030,6 @@ class RecipesView extends (0, _viewJsDefault.default) {
         recipesList.innerHTML = "";
     }
     displayRecipes(data) {
-        console.log("display recipes", data);
         const recipesList = this._parentElement.querySelector(".recipes-list");
         this._clearInputFields();
         this._clearResultsList();
@@ -1219,7 +1179,6 @@ class RecipeDetailsView extends (0, _viewJsDefault.default) {
         this._parentElement.addEventListener("click", function(e) {
             if (e.target.closest("button")?.classList.contains("back")) {
                 this.innerHTML = "";
-                console.log(e.target.closest("button").value);
                 handler(e.target.closest("button").value);
             }
         });
@@ -1382,7 +1341,7 @@ class ShoppingViews extends (0, _viewJsDefault.default) {
         const groups = this._regroupeByAisle(ingredients);
         // Create a string with the list of ingredients
         const ingList = Object.entries(groups).map(([aisle, ingredients])=>{
-            const list = ingredients.map((ing)=>`· ${ing.name[0].toUpperCase() + ing.name.slice(1).toLowerCase()} (${ing.amount} ${ing.unit})`).join("\n\n");
+            const list = ingredients.map((ing)=>`· ${ing.nameClean ? ing.nameClean[0].toUpperCase() + ing.nameClean.slice(1).toLowerCase() : ing.name[0].toUpperCase() + ing.name.slice(1).toLowerCase()} (${ing.amount} ${ing.unit})`).join("\n\n");
             return `${aisle.toUpperCase()}\n\n${list}`;
         }).join("\n\n");
         const content = `LIKE A CHEF - Shopping List\n===========================\n\n\n${ingList}`;
@@ -1401,8 +1360,8 @@ class ShoppingViews extends (0, _viewJsDefault.default) {
     cleanData = function(menu) {
         const allIngredients = menu.map((recipe)=>recipe.extendedIngredients);
         let IDs = [];
-        // Filtering invalid data and duplicate ingredients
-        const uniqueIngredients = allIngredients.flat().filter((ing)=>{
+        // Filtering invalid data and duplicate ingredients (by id)
+        const uniqueIdIngredients = allIngredients.flat().filter((ing)=>{
             if (ing.id === -1) return;
             if (!IDs.includes(ing.id)) {
                 IDs.push(ing.id);
@@ -1411,20 +1370,19 @@ class ShoppingViews extends (0, _viewJsDefault.default) {
         });
         let names = [];
         let cleanNames = [];
-        const cleanData = uniqueIngredients.filter((ing)=>{
+        // Filtering duplicate ingredients (by name)
+        const uniqueIngredients = uniqueIdIngredients.filter((ing)=>{
             if (ing.nameClean && !cleanNames.includes(ing.nameClean)) {
+                // If simple and clean name exists and not already there
                 cleanNames.push(ing.nameClean);
                 return ing;
             } else if (!names.includes(ing.name)) {
+                // If standard name not already there
                 names.push(ing.name);
                 return ing;
             }
         });
-        console.log("CLEAN NAMES", cleanNames);
-        console.log("NAMES", names);
-        console.log(cleanData);
-        // console.log(cleanData);
-        return cleanData;
+        return uniqueIngredients;
     };
     renderHTML(data) {
         const groups = this._regroupeByAisle(data);
@@ -22573,16 +22531,17 @@ module.exports = require("506fec890b96892c")(require("9e4dc32dbc01b7ff").getBund
 },{"506fec890b96892c":"61B45","9e4dc32dbc01b7ff":"lgJ39"}],"eT0wj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// Handle listeners for the navbar links, display needed content
 parcelHelpers.export(exports, "handleNavigation", ()=>handleNavigation);
-var _welcomeControllerJs = require("./welcomeController.js");
+var _homeControllerJs = require("./homeController.js");
 var _fridgeControllerJs = require("./fridgeController.js");
 var _recipesControllerJs = require("./recipesController.js");
 var _menuControllerJs = require("./menuController.js");
 var _shoppingListControllerJs = require("./shoppingListController.js");
 function handleNavigation(value) {
     switch(value){
-        case "welcome":
-            (0, _welcomeControllerJs.controlWelcome)();
+        case "home":
+            (0, _homeControllerJs.controlHome)();
             break;
         case "fridge":
             (0, _fridgeControllerJs.controlFridge)();
@@ -22599,23 +22558,18 @@ function handleNavigation(value) {
     }
 }
 
-},{"./welcomeController.js":"64iI8","./fridgeController.js":"1lNql","./recipesController.js":"90rdM","./menuController.js":"bRC7z","./shoppingListController.js":"4OUPd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"64iI8":[function(require,module,exports) {
+},{"./fridgeController.js":"1lNql","./recipesController.js":"90rdM","./menuController.js":"bRC7z","./shoppingListController.js":"4OUPd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./homeController.js":"8JouN"}],"1lNql":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "controlWelcome", ()=>controlWelcome);
-var _welcomeViewJs = require("../views/welcomeView.js");
-var _welcomeViewJsDefault = parcelHelpers.interopDefault(_welcomeViewJs);
-function controlWelcome() {
-    (0, _welcomeViewJsDefault.default).renderHTML();
-}
-
-},{"../views/welcomeView.js":"kga6f","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1lNql":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
+// Display fridge content
 parcelHelpers.export(exports, "controlFridge", ()=>controlFridge);
+// Autocomplete on the search bar for ingredients
 parcelHelpers.export(exports, "handleAutocomplete", ()=>handleAutocomplete);
+// Submit query
 parcelHelpers.export(exports, "handleSubmit", ()=>handleSubmit);
+// Side menu grouping ingredients by type
 parcelHelpers.export(exports, "handleSort", ()=>handleSort);
+// Delete ingredient from the state and removing it from the DOM
 parcelHelpers.export(exports, "handleDeleteIngredient", ()=>handleDeleteIngredient);
 var _fridgeViewJs = require("../views/fridgeView.js");
 var _fridgeViewJsDefault = parcelHelpers.interopDefault(_fridgeViewJs);
@@ -22625,7 +22579,6 @@ async function controlFridge() {
     if ((0, _modelJs.state).fridgeIngredients.length === 0) return;
     (0, _modelJs.state).fridgeIngredients.forEach((el)=>(0, _fridgeViewJsDefault.default).displayIngredient(el));
     (0, _fridgeViewJsDefault.default).updateNumIngredients();
-    console.log("\uD83D\uDCA5 fridge ingredients:", (0, _modelJs.state).fridgeIngredients);
 }
 async function handleAutocomplete(query) {
     try {
@@ -22750,8 +22703,7 @@ const state = {
     fridgeIngredients: [],
     recipes: [],
     currentRecipe: {},
-    menu: [],
-    menuIngredients: []
+    menu: []
 };
 const loadAutocompleteInfo = async function(query) {
     try {
@@ -22788,7 +22740,6 @@ const loadIngredientInfo = async function(name) {
         const id = data.results[0].id;
         // // Get ingredient informations based on its ID
         const response = await fetch(`http://localhost:3000/info/${id}`);
-        console.log("response:", response);
         const info = await response.json();
         if (!info.name) throw new Error("Something went wrong loading ingredient data");
         state.currentIngredient = info;
@@ -22806,10 +22757,8 @@ const deleteIng = function(id) {
 };
 const loadRecipesMyIng = async function() {
     // WORKING LOCALLY
-    // console.log('hey');
     // const data = JSON.parse(window.localStorage.getItem('recipes'));
     // state.recipes = data;
-    // console.log(data);
     // return data;
     let ingredientsList = "";
     state.fridgeIngredients.forEach((el)=>{
@@ -22848,7 +22797,6 @@ const loadRecipeDetails = async function(id) {
     const data = await res.json();
     state.currentRecipe = data;
     updateLocalStorageCurrentRecipe();
-    console.log("\uD83D\uDCA5 load recipe details:", data);
     // BEFORE WORKING LOCALLY
     window.localStorage.setItem("recipeDetails", JSON.stringify(data));
     return data;
@@ -22881,10 +22829,8 @@ const updateLocalStorageMenu = function() {
 const init = function() {
     const fridgeIngredients = localStorage.getItem("fridgeIngredients");
     const menu = localStorage.getItem("menu");
-    const menuIngredients = localStorage.getItem("menuIngredients");
     if (fridgeIngredients) state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
     if (menu) state.menu = Object.values(JSON.parse(menu));
-    if (menuIngredients) state.menuIngredients = Object.values(JSON.parse(menuIngredients));
     console.log("\uD83D\uDCA5 STATE", state);
 };
 init();
@@ -22892,8 +22838,11 @@ init();
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"90rdM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// Display recipes content
 parcelHelpers.export(exports, "controlRecipes", ()=>controlRecipes);
+// Display the details of a clicked recipe in the list
 parcelHelpers.export(exports, "handleRecipeDetailsFromSearch", ()=>handleRecipeDetailsFromSearch);
+// Display the list of results
 parcelHelpers.export(exports, "handleSearchRecipes", ()=>handleSearchRecipes);
 var _recipesViewJs = require("../views/recipesView.js");
 var _recipesViewJsDefault = parcelHelpers.interopDefault(_recipesViewJs);
@@ -22904,9 +22853,7 @@ function controlRecipes() {
     (0, _recipesViewJsDefault.default).renderHTML();
 }
 async function handleRecipeDetailsFromSearch(id) {
-    console.log(id);
     const recipe = (0, _modelJs.state).recipes.find((el)=>+el.id === +id);
-    console.log(recipe);
     const recipeData = await (0, _modelJs.loadRecipeDetails)(recipe.id);
     // WORKING LOCALLY
     // const recipeData = await loadRecipeDetails();
@@ -22914,25 +22861,30 @@ async function handleRecipeDetailsFromSearch(id) {
 }
 async function handleSearchRecipes(useOnlyMyIng, query, diets, intolerances) {
     try {
+        // Searching recipes that use my ingredients
         if (useOnlyMyIng) {
             const data = await (0, _modelJs.loadRecipesMyIng)();
             (0, _recipesViewJsDefault.default).displayRecipes(data);
         }
+        // Searching recipes according to the query string
         if (!useOnlyMyIng) {
             if (!query) throw new Error("Please enter a query");
             const data = await (0, _modelJs.loadRecipesQuery)(query, diets, intolerances);
             (0, _recipesViewJsDefault.default).displayRecipes(data);
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
 },{"../views/recipesView.js":"iLzNb","../model.js":"Y4A21","../views/recipeDetailsView.js":"43bGi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bRC7z":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// Display menu content
 parcelHelpers.export(exports, "controlMenu", ()=>controlMenu);
+// Display the detail of a recipe (data already loaded, no API fetch)
 parcelHelpers.export(exports, "handleRecipeDetailsFromMenu", ()=>handleRecipeDetailsFromMenu);
+// Deleting recipe from the state and removing it from the DOM
 parcelHelpers.export(exports, "handleDeleteRecipe", ()=>handleDeleteRecipe);
 var _menuViewJs = require("../views/menuView.js");
 var _menuViewJsDefault = parcelHelpers.interopDefault(_menuViewJs);
@@ -22955,7 +22907,9 @@ function handleDeleteRecipe(id) {
 },{"../views/menuView.js":"lg0TE","../model.js":"Y4A21","../views/recipeDetailsView.js":"43bGi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4OUPd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// Display shopping list content
 parcelHelpers.export(exports, "controlShoppingList", ()=>controlShoppingList);
+// Generate PDF with list of ingredients regrouped by aisle (categories)
 parcelHelpers.export(exports, "handlePdf", ()=>handlePdf);
 var _shoppingListViewJs = require("../views/shoppingListView.js");
 var _shoppingListViewJsDefault = parcelHelpers.interopDefault(_shoppingListViewJs);
@@ -22965,14 +22919,58 @@ function controlShoppingList() {
     (0, _shoppingListViewJsDefault.default).renderHTML(cleanData);
 }
 function handlePdf() {
-    (0, _shoppingListViewJsDefault.default).generatePDF((0, _modelJs.state).menuIngredients);
+    const cleanData = (0, _shoppingListViewJsDefault.default).cleanData((0, _modelJs.state).menu);
+    (0, _shoppingListViewJsDefault.default).generatePDF(cleanData);
 }
 
-},{"../views/shoppingListView.js":"eqBFd","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3e1LN":[function(require,module,exports) {
+},{"../views/shoppingListView.js":"eqBFd","../model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8JouN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// Display home content
+parcelHelpers.export(exports, "controlHome", ()=>controlHome);
+var _homeViewJs = require("../views/homeView.js");
+var _homeViewJsDefault = parcelHelpers.interopDefault(_homeViewJs);
+function controlHome() {
+    (0, _homeViewJsDefault.default).renderHTML();
+}
+
+},{"../views/homeView.js":"kxSlf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kxSlf":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./view.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class HomeView extends (0, _viewJsDefault.default) {
+    loadingListener() {
+        window.addEventListener("load", this.renderHTML.bind(this));
+    }
+    navigationListener(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            if (e.target.classList.contains("start")) handler("fridge");
+        });
+    }
+    renderHTML() {
+        const markup = `
+      <div class="home-content">
+        <h1>managing meals and groceries</h1>
+        <h2>the easy way</h2>
+        <button class="btn start">Get started!</button>
+      </div>
+    `;
+        this._clearMarkup();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+        this._clearHighlightedNavLink();
+    }
+}
+exports.default = new HomeView();
+
+},{"./view.js":"bWlJ9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3e1LN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// Display the details of a single recipe
 parcelHelpers.export(exports, "controlDisplayRecipe", ()=>controlDisplayRecipe);
+// Get back to previous page (either the search list or the menu list)
 parcelHelpers.export(exports, "handleBackToList", ()=>handleBackToList);
+// Add a recipe to the menu
 parcelHelpers.export(exports, "handleAddToMenu", ()=>handleAddToMenu);
 var _recipeDetailsViewJs = require("../views/recipeDetailsView.js");
 var _recipeDetailsViewJsDefault = parcelHelpers.interopDefault(_recipeDetailsViewJs);
@@ -23000,7 +22998,7 @@ function handleAddToMenu(recipeId) {
         }
         (0, _modelJs.addRecipeToMenu)();
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 

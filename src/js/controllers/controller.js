@@ -1,6 +1,6 @@
 // Importing views to load event listeners
 import navigationListener from '../views/navigationListener';
-import welcomeView from '../views/welcomeView';
+import homeView from '../views/homeView';
 import fridgeView from '../views/fridgeView';
 import recipesView from '../views/recipesView';
 import recipeDetailsView from '../views/recipeDetailsView';
@@ -14,15 +14,14 @@ import * as recipesController from './recipesController';
 import * as recipeDetailsController from './recipeDetailsController';
 import * as menuController from './menuController';
 import * as shoppingListController from './shoppingListController';
-import { controlWelcome } from './welcomeController';
+import { controlHome } from './homeController';
 
+// Load event listeners only once
 const init = function () {
-  // Setting event listeners on nav links
   navigationListener(handleNavigation);
 
-  // Loading all event listeners just once
-  welcomeView.loadingListener();
-  welcomeView.navigationListener(handleNavigation);
+  homeView.loadingListener();
+  homeView.navigationListener(handleNavigation);
 
   fridgeView.autocompleteListener(fridgeController.handleAutocomplete);
   fridgeView.suggestionsListener();
@@ -50,8 +49,8 @@ const init = function () {
   shoppingListView.generatePdfListener(shoppingListController.handlePdf);
   shoppingListView.navigationListener(handleNavigation);
 
-  // Calling controller of welcome page
-  controlWelcome();
+  // Calling controller of the home page
+  controlHome();
 };
 
 init();

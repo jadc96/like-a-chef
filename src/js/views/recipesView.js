@@ -112,7 +112,6 @@ class RecipesView extends View {
       'keydown',
       function (e) {
         if (e.key === 'Escape') {
-          console.log('ok');
           this._parentElement
             .querySelectorAll('.dropdown-list')
             .forEach(list => list.classList.add('hidden'));
@@ -140,7 +139,6 @@ class RecipesView extends View {
   }
 
   displayRecipes(data) {
-    console.log('display recipes', data);
     const recipesList = this._parentElement.querySelector('.recipes-list');
     this._clearInputFields();
     this._clearResultsList();

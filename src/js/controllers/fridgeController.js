@@ -6,6 +6,7 @@ import {
   deleteIng,
 } from '../model.js';
 
+// Display fridge content
 export async function controlFridge() {
   fridgeView.renderHTML();
 
@@ -13,9 +14,9 @@ export async function controlFridge() {
 
   state.fridgeIngredients.forEach(el => fridgeView.displayIngredient(el));
   fridgeView.updateNumIngredients();
-  console.log('💥 fridge ingredients:', state.fridgeIngredients);
 }
 
+// Autocomplete on the search bar for ingredients
 export async function handleAutocomplete(query) {
   try {
     const results = await loadAutocompleteInfo(query);
@@ -25,6 +26,7 @@ export async function handleAutocomplete(query) {
   }
 }
 
+// Submit query
 export async function handleSubmit(data) {
   const fridgeIngredients = state.fridgeIngredients;
   const ok = fridgeView.checkIngredientFormat(data, fridgeIngredients);
@@ -38,6 +40,7 @@ export async function handleSubmit(data) {
   handleSort(category);
 }
 
+// Side menu grouping ingredients by type
 export function handleSort(data) {
   // prettier-ignore
   const categories = [
@@ -73,6 +76,7 @@ export function handleSort(data) {
   fridgeView.updateNumIngredients();
 }
 
+// Delete ingredient from the state and removing it from the DOM
 export function handleDeleteIngredient(id) {
   const [ing] = state.fridgeIngredients.filter(el => el.id === id);
   deleteIng(id);

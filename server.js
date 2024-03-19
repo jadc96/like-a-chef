@@ -52,12 +52,10 @@ app.get('/search/:name', async function (req, res) {
 app.get('/info/:id', async function (req, res) {
   try {
     const id = req.params.id;
-    console.log('server, params id', id);
     const response = await fetch(
       `${API_URL}/food/ingredients/${id}/information?apiKey=${API_KEY}`
     );
     const data = await response.json();
-    console.log('💥 server data:', data);
     res.send(data);
   } catch (error) {
     res.status(500).send(error);
@@ -94,7 +92,7 @@ app.get(
       res.send(data);
     } catch (error) {
       res.status(500).send(error);
-      console.log(error.message);
+      console.error(error.message);
     }
   }
 );
@@ -110,7 +108,7 @@ app.get('/recipeDetails/:id', async function (req, res) {
     return data;
   } catch (error) {
     res.status(500).send(error);
-    console.log(error.message);
+    console.error(error.message);
   }
 });
 

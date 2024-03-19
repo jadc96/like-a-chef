@@ -1,6 +1,6 @@
 import View from './view.js';
 
-class WelcomeView extends View {
+class HomeView extends View {
   loadingListener() {
     window.addEventListener('load', this.renderHTML.bind(this));
   }
@@ -15,7 +15,7 @@ class WelcomeView extends View {
 
   renderHTML() {
     const markup = `
-      <div class="welcome-content">
+      <div class="home-content">
         <h1>managing meals and groceries</h1>
         <h2>the easy way</h2>
         <button class="btn start">Get started!</button>
@@ -28,4 +28,4 @@ class WelcomeView extends View {
   }
 }
 
-export default new WelcomeView();
+export default new HomeView();

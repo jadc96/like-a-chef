@@ -32,7 +32,10 @@ class ShoppingViews extends View {
           .map(
             ing =>
               `· ${
-                ing.name[0].toUpperCase() + ing.name.slice(1).toLowerCase()
+                ing.nameClean
+                  ? ing.nameClean[0].toUpperCase() +
+                    ing.nameClean.slice(1).toLowerCase()
+                  : ing.name[0].toUpperCase() + ing.name.slice(1).toLowerCase()
               } (${ing.amount} ${ing.unit})`
           )
           .join('\n\n');
@@ -65,8 +68,8 @@ class ShoppingViews extends View {
 
     let IDs = [];
 
-    // Filtering invalid data and duplicate ingredients
-    const uniqueIngredients = allIngredients.flat().filter(ing => {
+    // Filtering invalid data and duplicate ingredients (by id)
+    const uniqueIdIngredients = allIngredients.flat().filter(ing => {
       if (ing.id === -1) return;
 
       if (!IDs.includes(ing.id)) {
@@ -78,22 +81,20 @@ class ShoppingViews extends View {
     let names = [];
     let cleanNames = [];
 
-    const cleanData = uniqueIngredients.filter(ing => {
+    // Filtering duplicate ingredients (by name)
+    const uniqueIngredients = uniqueIdIngredients.filter(ing => {
       if (ing.nameClean && !cleanNames.includes(ing.nameClean)) {
+        // If simple and clean name exists and not already there
         cleanNames.push(ing.nameClean);
         return ing;
       } else if (!names.includes(ing.name)) {
+        // If standard name not already there
         names.push(ing.name);
         return ing;
       }
     });
 
-    console.log('CLEAN NAMES', cleanNames);
-    console.log('NAMES', names);
-    console.log(cleanData);
-
-    // console.log(cleanData);
-    return cleanData;
+    return uniqueIngredients;
   };
 
   renderHTML(data) {

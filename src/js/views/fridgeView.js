@@ -173,7 +173,6 @@ class Fridge extends View {
   }
 
   checkIngredientFormat(data, fridgeIngredients) {
-    // console.log(data);
     // Check if the ingredient is already in the list
     // NB : sometimes the API autocomplete returns the singular form of the ingredient, while the object name has the plural form, e.g. 'apple' instead of 'apples', hence the 's' or 'es' added to data
     if (
@@ -191,8 +190,6 @@ class Fridge extends View {
   ///////////////// DISPLAYING NEW INGREDIENT /////////////////
 
   displayIngredient(data) {
-    console.log('💥 display ingredient:', data);
-
     const list = document.querySelector('.cards-list');
     const markup = `
     <div class="card" data-item="${data.name}">
@@ -241,7 +238,6 @@ class Fridge extends View {
   deleteIngredientListener(handler) {
     this._parentElement.addEventListener('click', function (e) {
       if (e.target.closest('button')?.classList.contains('delete-ing')) {
-        console.log(e.target.closest('button').value);
         handler(+e.target.closest('button').value);
       }
     });
@@ -256,7 +252,7 @@ class Fridge extends View {
   navigationListener(handler) {
     this._parentElement.addEventListener('click', function (e) {
       if (e.target.closest('div').classList.contains('go-to-home')) {
-        handler('welcome');
+        handler('home');
       } else if (e.target.closest('div').classList.contains('go-to-recipes')) {
         handler('recipes');
       }
