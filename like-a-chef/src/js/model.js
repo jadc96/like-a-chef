@@ -1,3 +1,5 @@
+import { NODE_API_URL } from './config.js';
+
 ///////////////////// PRELOADED DATA //////////////////////
 
 const apple = {
@@ -91,9 +93,7 @@ export const loadAutocompleteInfo = async function (query) {
     // ];
 
     // WORKING WITH THE API
-    const res = await fetch(
-      `http://localhost:3000/api/v1/autocomplete/${query}`
-    );
+    const res = await fetch(`${NODE_API_URL}/autocomplete/${query}`);
     const data = await res.json();
 
     if (data.length === 0) throw new Error('No results found');
@@ -116,7 +116,7 @@ export const loadIngredientInfo = async function (name) {
 
     // WORKING WITH THE API
     // Get ingredient ID based on its name
-    const res = await fetch(`http://localhost:3000/api/v1/search/${name}`);
+    const res = await fetch(`${NODE_API_URL}/search/${name}`);
     const data = await res.json();
 
     if (data.results.length === 0) throw new Error();
@@ -124,7 +124,7 @@ export const loadIngredientInfo = async function (name) {
     const id = data.results[0].id;
 
     // // Get ingredient informations based on its ID
-    const response = await fetch(`http://localhost:3000/api/v1/info/${id}`);
+    const response = await fetch(`${NODE_API_URL}/info/${id}`);
     const info = await response.json();
 
     if (!info.name)
@@ -159,9 +159,7 @@ export const loadRecipesMyIng = async function () {
 
   if (ingredientsList === '') return;
 
-  const res = await fetch(
-    `http://localhost:3000/api/v1/recipesByIng/${ingredientsList}`
-  );
+  const res = await fetch(`${NODE_API_URL}/recipesByIng/${ingredientsList}`);
   const data = await res.json();
   state.recipes = data;
 
@@ -183,7 +181,7 @@ export const loadRecipesQuery = async function (query, diets, intolerances) {
   if (intolerances === '') intolerances = undefined;
 
   const res = await fetch(
-    `http://localhost:3000/api/v1/recipesByQuery/${query}/${diets}/${intolerances}`
+    `${NODE_API_URL}/recipesByQuery/${query}/${diets}/${intolerances}`
   );
   const data = await res.json();
   state.recipes = data.results;
@@ -200,7 +198,7 @@ export const loadRecipeDetails = async function (id) {
   // return data;
 
   // WORKING WITH THE API
-  const res = await fetch(`http://localhost:3000/api/v1/recipeDetails/${id}`);
+  const res = await fetch(`${NODE_API_URL}/recipeDetails/${id}`);
   const data = await res.json();
   state.currentRecipe = data;
   updateLocalStorageCurrentRecipe();
