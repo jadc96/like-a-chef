@@ -1,7 +1,6 @@
-import fetch from 'node-fetch';
-import express from 'express';
-import { API_URL } from './.env';
-import { API_KEY } from './.env';
+const fetch = require('node-fetch-commonjs');
+const express = require('express');
+const { API_KEY, API_URL } = require('./.env');
 
 const app = express();
 
