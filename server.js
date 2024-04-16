@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
 
 ///////////////////// API CALLS //////////////////////
 
-app.get('/autocomplete/:query', async function (req, res) {
+app.get('/api/v1/autocomplete/:query', async function (req, res) {
   try {
     const query = req.params.query;
     const response = await fetch(
@@ -36,7 +36,7 @@ app.get('/autocomplete/:query', async function (req, res) {
   }
 });
 
-app.get('/search/:name', async function (req, res) {
+app.get('/api/v1/search/:name', async function (req, res) {
   try {
     const name = req.params.name;
     const response = await fetch(
@@ -49,7 +49,7 @@ app.get('/search/:name', async function (req, res) {
   }
 });
 
-app.get('/info/:id', async function (req, res) {
+app.get('/api/v1/info/:id', async function (req, res) {
   try {
     const id = req.params.id;
     const response = await fetch(
@@ -62,7 +62,7 @@ app.get('/info/:id', async function (req, res) {
   }
 });
 
-app.get('/recipesByIng/:ingList', async function (req, res) {
+app.get('/api/v1/recipesByIng/:ingList', async function (req, res) {
   try {
     const ingList = req.params.ingList;
     const url = `${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&number=10&ingredients=${ingList}&ranking=1`;
@@ -75,7 +75,7 @@ app.get('/recipesByIng/:ingList', async function (req, res) {
 });
 
 app.get(
-  '/recipesByQuery/:query/:diets/:intolerances',
+  '/api/v1/recipesByQuery/:query/:diets/:intolerances',
   async function (req, res) {
     try {
       const query = req.params.query;
