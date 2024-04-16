@@ -1,7 +1,8 @@
+const dotenv = require('dotenv');
 const fetch = require('node-fetch-commonjs');
 const express = require('express');
-const { API_KEY, API_URL } = require('./.env');
 
+dotenv.config({ path: './.env' });
 const app = express();
 
 ///////////////////// CORS ORIGIN //////////////////////
@@ -22,7 +23,7 @@ app.get('/api/v1/autocomplete/:query', async function (req, res) {
   try {
     const query = req.params.query;
     const response = await fetch(
-      `${API_URL}/food/ingredients/autocomplete?apiKey=${API_KEY}&query=${query}`
+      `${process.env.API_URL}/food/ingredients/autocomplete?apiKey=${process.env.API_KEY}&query=${query}`
     );
     const data = await response.json();
     res.send(data);
@@ -35,7 +36,7 @@ app.get('/api/v1/search/:name', async function (req, res) {
   try {
     const name = req.params.name;
     const response = await fetch(
-      `${API_URL}/food/ingredients/search?apiKey=${API_KEY}&query=${name}&number=1`
+      `${process.env.API_URL}/food/ingredients/search?apiKey=${process.env.API_KEY}&query=${name}&number=1`
     );
     const data = await response.json();
     res.send(data);
@@ -48,7 +49,7 @@ app.get('/api/v1/info/:id', async function (req, res) {
   try {
     const id = req.params.id;
     const response = await fetch(
-      `${API_URL}/food/ingredients/${id}/information?apiKey=${API_KEY}`
+      `${process.env.API_URL}/food/ingredients/${id}/information?apiKey=${process.env.API_KEY}`
     );
     const data = await response.json();
     res.send(data);
@@ -60,7 +61,7 @@ app.get('/api/v1/info/:id', async function (req, res) {
 app.get('/api/v1/recipesByIng/:ingList', async function (req, res) {
   try {
     const ingList = req.params.ingList;
-    const url = `${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&number=10&ingredients=${ingList}&ranking=1`;
+    const url = `${process.env.API_URL}/recipes/findByIngredients?apiKey=${process.env.API_KEY}&number=10&ingredients=${ingList}&ranking=1`;
     const response = await fetch(url);
     const data = await response.json();
     res.send(data);
@@ -81,7 +82,7 @@ app.get(
       const opt2 =
         intolerances !== 'undefined' ? `&intolerances=${intolerances}` : '';
 
-      const url = `${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&query=${query}${opt1}${opt2}&ignorePantry=true&number=10`;
+      const url = `${process.env.API_URL}/recipes/complexSearch?apiKey=${process.env.API_KEY}&query=${query}${opt1}${opt2}&ignorePantry=true&number=10`;
       const response = await fetch(url);
       const data = await response.json();
       res.send(data);
@@ -96,7 +97,7 @@ app.get('/recipeDetails/:id', async function (req, res) {
   try {
     const id = req.params.id;
     const response = await fetch(
-      `${API_URL}/recipes/${id}/information?apiKey=${API_KEY}`
+      `${process.env.API_URL}/recipes/${id}/information?apiKey=${process.env.API_KEY}`
     );
     const data = await response.json();
     res.send(data);
