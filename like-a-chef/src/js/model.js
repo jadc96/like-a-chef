@@ -1,6 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config({ path: './.env' });
-
 ///////////////////// PRELOADED DATA //////////////////////
 
 const apple = {
