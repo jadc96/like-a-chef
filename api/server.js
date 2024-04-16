@@ -1,13 +1,9 @@
-import { API_URL } from '../like-a-chef/src/js/config.js';
-import { API_KEY } from './.env';
-
 import fetch from 'node-fetch';
 import express from 'express';
+import { API_URL } from './.env';
+import { API_KEY } from './.env';
+
 const app = express();
-
-///////////////////// SERVER //////////////////////
-
-app.use(express.static('public'));
 
 ///////////////////// CORS ORIGIN //////////////////////
 
