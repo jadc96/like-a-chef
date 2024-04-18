@@ -1,5 +1,5 @@
 footer {
-  background-color: rgb(106, 106, 155);
+  background-color: #39393f;
   height: 10vh;
   width: 100vw;
   max-width: 100%;
@@ -9,4 +9,12 @@ footer {
   justify-content: space-around;
   align-items: center;
   color: white;
+}
+
+footer a {
+  color: white;
+
+  &:visited {
+    color: white;
+  }
 }

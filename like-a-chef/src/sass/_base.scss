@@ -3,7 +3,7 @@ $main-background: '#fcfcfc';
 $primary-color-dark: #99e0aad1;
 $primary-color-light: #d0f5df8f;
 $primary-color-darker: green;
-$secondary-color: rgba(250, 235, 215, 0.801);
+$secondary-color: #f5f5f58f;
 
 * {
   padding: 0;
@@ -28,4 +28,17 @@ body {
 
 li {
   list-style: none;
+}
+
+a {
+  color: #019bef;
+  text-decoration: none;
+
+  &:visited {
+    color: #019bef;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

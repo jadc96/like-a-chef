@@ -14,20 +14,21 @@
   margin: 10px 10% 5% 0;
   padding: 1em 2em;
   box-shadow: 0 0 3px #d3d3d3;
+  background-color: rgba(245, 245, 245, 0.56);
 
   h4 {
     margin-bottom: 1em;
   }
 
   .active {
-    text-decoration: underline;
+    font-weight: 600;
   }
 }
 
 .categories {
   .sort {
     cursor: pointer;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.5px;
     line-height: 1.8em;
   }
 }
@@ -94,7 +95,7 @@
   align-items: center;
   height: 52px;
   width: 100%;
-  background-color: $secondary-color;
+  background-color: $primary-color-light;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 
@@ -105,14 +106,15 @@
 }
 
 .delete-ing {
-  background-color: rgb(225, 28, 28);
-  color: white;
+  background-color: $primary-color-light;
+  color: red;
   border: none;
   border-radius: 2px;
-  padding: 5px 5px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   path {
     width: 24px;
@@ -149,7 +151,6 @@
       position: static;
       padding: 15px;
       margin-bottom: 20px;
-      background-color: antiquewhite;
     }
   }
 

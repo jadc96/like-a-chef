@@ -1,0 +1,38 @@
+.btn {
+  color: black;
+  cursor: pointer;
+  transition: all 0.7s;
+  background-color: $primary-color-dark;
+  padding: 0.7em 1em;
+  border: 1px solid $primary-color-light;
+  border-radius: 5px;
+
+  &:hover {
+    transition: all 0.4s;
+    color: green;
+    background-color: $primary-color-light;
+    border: solid 1px $primary-color-light;
+  }
+}
+
+.nav__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: fit-content;
+  cursor: pointer;
+
+  p {
+    padding: 0 5px;
+  }
+}
+
+.add-menu {
+  color: black;
+
+  &:hover {
+    color: green;
+    background-color: $primary-color-light;
+    border: solid 1px $primary-color-light;
+  }
+}

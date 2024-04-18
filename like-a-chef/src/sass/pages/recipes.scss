@@ -78,7 +78,59 @@
   z-index: 1;
 
   li {
-    padding: 0.3em;
+    padding: 0.3em 0.5em 0.3em 0.7em;
     overflow: hidden;
+    text-align: left;
+  }
+}
+
+.menu__recipe {
+  padding-right: 1.5em;
+
+  p {
+    text-align: center;
+  }
+}
+
+.searched__recipe {
+  text-align: center;
+}
+
+.small {
+  font-weight: 100;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+///////////////////////// MEDIA QUERIES /////////////////////////
+
+@media screen and (min-width: 1200px) {
+  .recipes-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+}
+
+@media screen and (max-width: 992px) {
+  .recipes-list {
+    width: 80vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 576px) {
+  .recipe__image {
+    display: none;
+  }
+
+  .menu__recipe {
+    padding-left: 1em;
   }
 }

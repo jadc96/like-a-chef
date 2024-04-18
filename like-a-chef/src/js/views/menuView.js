@@ -47,7 +47,7 @@ class MenuView extends View {
         return `
         <li class="recipe menu__recipe" data-item="${recipe.id}">
           <img class="recipe__image" src="${recipe.image}" alt="${recipe.title}">
-          <p>${recipe.title}</p>
+          <p class="bold">${recipe.title}</p>
           <button class="btn delete-recipe" value="${recipe.id}">Delete</button>
         </li>
       `;

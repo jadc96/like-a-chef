@@ -89,10 +89,10 @@ class RecipeDetailsView extends View {
 
         ${origin === 'menu' ? '' : `<button type="button" value="${recipe.id}" class="btn add-menu">Add to menu</button>`}
 
-        <h4 class="recipe-details__ingredients">Ingredients</h4>
+        <h2 class="recipe-details__ingredients">Ingredients</h2>
         <ul class="recipe-details__ingredients-list">${ingredients}</ul>
 
-        <h4 class="recipe-details__instructions">Instructions</h4>
+        <h2 class="recipe-details__instructions">Instructions</h2>
         <ul class="recipe-details__instructions-text">${instructions}</ul>
       </div>
       `;

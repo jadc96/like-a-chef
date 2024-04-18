@@ -48,7 +48,7 @@
 }
 
 .recipe-details__description {
-  margin-top: 7em;
+  margin-top: 7.7em;
 }
 
 .health {
@@ -77,6 +77,10 @@
 }
 
 .summary {
+  background-color: $secondary-color;
+  box-shadow: 0 0 5px 1px lightgrey;
+  padding: 15px 25px 20px 0;
+
   h3,
   p {
     margin-left: 3em;
@@ -103,10 +107,23 @@
 }
 
 .recipe-details__ingredients-list {
-  padding: 0.5em 0;
+  display: grid;
+  grid-auto-rows: 125px;
+  grid-gap: 10px;
+  padding: 2.5em 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 1px lightgrey;
 
   li {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: end center;
     padding: 0.2em 0;
+
+    img {
+      margin: auto;
+    }
   }
 }
 
@@ -123,6 +140,12 @@
 }
 
 ///////////////////////// MEDIA QUERIES /////////////////////////
+
+@media screen and (min-width: 1200px) {
+  .recipe-details__ingredients-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
 @media screen and (max-width: 1200px) {
   .recipe-details__img {
@@ -144,10 +167,24 @@
       margin-left: 0;
     }
   }
+
+  .recipe-details__ingredients-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .recipe-details__ingredients-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media screen and (max-width: 576px) {
   .health {
     margin: 25px 25px 25px 0;
+  }
+
+  .recipe-details__ingredients-list {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

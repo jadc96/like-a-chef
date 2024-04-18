@@ -146,16 +146,20 @@ class RecipesView extends View {
     let list = data
       .map(el => {
         const usedIngredients = data[0].hasOwnProperty('usedIngredientCount')
-          ? `<p>Ingredients used: ${el.usedIngredientCount}/
-          ${el.usedIngredientCount + el.unusedIngredients.length}</p>
-          <p>New ingredients needed: ${el.missedIngredientCount}</p>`
+          ? `<p class="small">Ingredients used: ${el.usedIngredientCount}/${
+              el.usedIngredientCount + el.unusedIngredients.length
+            }</p>
+          <p class="small">New ingredients needed: ${
+            el.missedIngredientCount
+          }</p>`
           : '';
 
         return `
         <li class="recipe searched__recipe" data-item="${el.id}">
           <img class="recipe__image" src="${el.image}" alt="${el.title}" />
-          <p class="">${el.title}</p>
+          <p class="bold">${el.title}</p>
           ${usedIngredients}
+          <p style="color: rgba(0, 0, 0, 0);"></p>
         </li>
         `;
       })
