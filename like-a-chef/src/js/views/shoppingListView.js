@@ -151,7 +151,11 @@ class ShoppingViews extends View {
       </div>
 
       <div class="shopping-list">
-        ${ingList}
+        ${
+          ingList.length
+            ? ingList
+            : '<p class="empty-menu">You don\'t have anything to buy yet!'
+        }
       </div>
     `;
 

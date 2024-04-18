@@ -10,6 +10,7 @@ import {
 export async function controlFridge() {
   fridgeView.renderHTML();
 
+  fridgeView.updateNumIngredients();
   if (state.fridgeIngredients.length === 0) return;
 
   state.fridgeIngredients.forEach(el => fridgeView.displayIngredient(el));
@@ -81,4 +82,5 @@ export function handleDeleteIngredient(id) {
   const [ing] = state.fridgeIngredients.filter(el => el.id === id);
   deleteIng(id);
   fridgeView.removeIngredient(ing.name);
+  fridgeView.updateNumIngredients();
 }

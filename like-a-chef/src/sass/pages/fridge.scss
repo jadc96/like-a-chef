@@ -122,6 +122,16 @@
   }
 }
 
+.empty-fridge {
+  font-size: 26px;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  color: #514d4d;
+  margin-top: 3em;
+  width: 50vw;
+}
+
 ///////////////////////// MEDIA QUERIES /////////////////////////
 
 @media screen and (min-width: 1200px) {

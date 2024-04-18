@@ -75,7 +75,7 @@ class MenuView extends View {
       ${
         list.length > 0
           ? `<ul class="recipes-list">${list}</ul>`
-          : "<p>You don't have any recipes in your menu yet</p>"
+          : '<p class="empty-menu">You don\'t have any recipes in your menu yet!</p>'
       }
     </div>
     `;
