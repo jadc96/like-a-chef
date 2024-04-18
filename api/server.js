@@ -93,7 +93,7 @@ app.get(
   }
 );
 
-app.get('/recipeDetails/:id', async function (req, res) {
+app.get('/api/v1/recipeDetails/:id', async function (req, res) {
   try {
     const id = req.params.id;
     const response = await fetch(
