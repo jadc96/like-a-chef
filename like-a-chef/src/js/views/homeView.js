@@ -25,6 +25,9 @@ class HomeView extends View {
 
     const markup = `
       <h1 class="homepage__title">like a chef</h1>
+      <p>find recipes that use your ingredients</p>
+      <p>create a menu</p>
+      <p>retrieve an automatically ordered shopping list</p>
       <button class="btn start">Start</button>
     `;
 
