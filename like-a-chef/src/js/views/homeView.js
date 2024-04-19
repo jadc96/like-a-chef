@@ -6,25 +6,29 @@ class HomeView extends View {
   }
 
   navigationListener(handler) {
-    this._parentElement.addEventListener('click', function (e) {
+    document.addEventListener('click', e => {
       if (e.target.classList.contains('start')) {
+        this._header.classList.remove('hidden');
+        this._footer.classList.remove('hidden');
+        this._homepage.classList.add('hidden');
         handler('fridge');
       }
     });
   }
 
   renderHTML() {
+    this._homepage.innerHTML = '';
+    this._header.classList.add('hidden');
+    this._footer.classList.add('hidden');
+    this._parentElement.innerHTML = '';
+    this._homepage.classList.remove('hidden');
+
     const markup = `
-      <div class="home-content">
-        <h1>managing meals and groceries</h1>
-        <h2>the easy way</h2>
-        <button class="btn start">Get started!</button>
-      </div>
+      <h1 class="homepage__title">like a chef</h1>
+      <button class="btn start">Start</button>
     `;
 
-    this._clearMarkup();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
-    this._clearHighlightedNavLink();
+    this._homepage.insertAdjacentHTML('afterbegin', markup);
   }
 }
 

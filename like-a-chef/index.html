@@ -8,12 +8,12 @@
 
     <link rel="stylesheet" href="src/sass/main.scss" />
     <link rel="icon" type="image/png" href="src/img/logo-circle.svg" />
-    <script type="module" src="src/js/controllers/controller.js"></script>
+    <script type="module" src="src/js/controllers/controller.js" defer></script>
   </head>
 
   <body>
     <div class="container">
-      <header class="header">
+      <header class="header hidden">
         <img
           src="src/img/logo-lac.svg"
           alt="logo"
@@ -32,10 +32,18 @@
         </p>
       </header>
 
+      <div class="homepage">
+        <!-- <img
+          src="src/img/logo-lac.png"
+          alt="logo"
+          class="header__logo navbar__item"
+        /> -->
+      </div>
+
       <main class="page-content"></main>
     </div>
 
-    <footer>
+    <footer class="hidden">
       <a href="https://github.com/jadc96" target="_blank">Github</a>
       <p>©️ jadc96 - 2023</p>
       <a

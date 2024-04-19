@@ -209,11 +209,12 @@ class Fridge extends View {
     list.insertAdjacentHTML('afterbegin', markup);
   }
 
-  updateNumIngredients() {
-    const num = this._parentElement.querySelectorAll('.card').length;
+  updateNumIngredients(num) {
     const list = document.querySelector('.cards-list');
 
-    if (num === 0) {
+    if (num !== 0) {
+      list.querySelector('.empty-fridge')?.remove();
+    } else {
       list.insertAdjacentHTML(
         'afterbegin',
         '<p class="empty-fridge">You don\'t have any ingredients yet!</p>'
@@ -221,6 +222,7 @@ class Fridge extends View {
     }
 
     const string = num > 1 ? `${num} products found` : `${num} product found`;
+
     this._parentElement.querySelector(
       '.num-ingredients'
     ).innerHTML = `${string}`;

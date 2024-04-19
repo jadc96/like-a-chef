@@ -1,4 +1,7 @@
 export default class View {
+  _header = document.querySelector('.header');
+  _footer = document.querySelector('footer');
+  _homepage = document.querySelector('.homepage');
   _parentElement = document.querySelector('.page-content');
 
   _clearMarkup() {

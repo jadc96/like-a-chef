@@ -82,15 +82,6 @@ export const state = {
 
 export const loadAutocompleteInfo = async function (query) {
   try {
-    // WORKING LOCALLY
-    // return [
-    //   { name: 'apple' },
-    //   { name: 'bread' },
-    //   { name: 'zucchini' },
-    //   { name: 'apple cider' },
-    // ];
-
-    // WORKING WITH THE API
     const res = await fetch(
       `${process.env.NODE_API_URL}/autocomplete/${query}`
     );
@@ -106,15 +97,6 @@ export const loadAutocompleteInfo = async function (query) {
 
 export const loadIngredientInfo = async function (name) {
   try {
-    // WORKING LOCALLY
-    // if (name === 'apple') state.currentIngredient = apple;
-    // if (name === 'bread') state.currentIngredient = bread;
-    // if (name === 'zucchini') state.currentIngredient = zucchini;
-    // state.currentIngredient.quantity = 1;
-    // state.fridgeIngredients.push(state.currentIngredient);
-    // updateLocalStorageIngredients();
-
-    // WORKING WITH THE API
     // Get ingredient ID based on its name
     const res = await fetch(`${process.env.NODE_API_URL}/search/${name}`);
     const data = await res.json();
@@ -123,7 +105,7 @@ export const loadIngredientInfo = async function (name) {
 
     const id = data.results[0].id;
 
-    // // Get ingredient informations based on its ID
+    // Get ingredient informations based on its ID
     const response = await fetch(`${process.env.NODE_API_URL}/info/${id}`);
     const info = await response.json();
 
@@ -141,16 +123,15 @@ export const loadIngredientInfo = async function (name) {
 };
 
 export const deleteIng = function (id) {
-  state.fridgeIngredients.pop(ing => ing.id === id);
+  const index = state.fridgeIngredients.findIndex(ing => ing.id === id);
+
+  if (index !== -1) {
+    state.fridgeIngredients.splice(index, 1);
+  }
   updateLocalStorageIngredients();
 };
 
 export const loadRecipesMyIng = async function () {
-  // WORKING LOCALLY
-  // const data = JSON.parse(window.localStorage.getItem('recipes'));
-  // state.recipes = data;
-  // return data;
-
   let ingredientsList = '';
   state.fridgeIngredients.forEach(el => {
     ingredientsList += `${el.name},+`;
@@ -165,19 +146,10 @@ export const loadRecipesMyIng = async function () {
   const data = await res.json();
   state.recipes = data;
 
-  // BEFORE WORKING LOCALLY
-  window.localStorage.setItem('recipes', JSON.stringify(data));
-
   return data;
 };
 
 export const loadRecipesQuery = async function (query, diets, intolerances) {
-  // WORKING LOCALLY
-  // const data = JSON.parse(window.localStorage.getItem('searchedRecipes'));
-  // results = data.results;
-
-  // return results;
-
   if (query === '') query = undefined;
   if (diets === '') diets = undefined;
   if (intolerances === '') intolerances = undefined;
@@ -188,26 +160,14 @@ export const loadRecipesQuery = async function (query, diets, intolerances) {
   const data = await res.json();
   state.recipes = data.results;
 
-  // BEFORE WORKING LOCALLY
-  window.localStorage.setItem('searchedRecipes', JSON.stringify(data));
-
   return data.results;
 };
 
 export const loadRecipeDetails = async function (id) {
-  // WORKING LOCALLY
-  // const data = JSON.parse(window.localStorage.getItem('recipeDetails'));
-  // return data;
-
-  // WORKING WITH THE API
   const res = await fetch(`${process.env.NODE_API_URL}/recipeDetails/${id}`);
   const data = await res.json();
   state.currentRecipe = data;
   updateLocalStorageCurrentRecipe();
-
-  // BEFORE WORKING LOCALLY
-  window.localStorage.setItem('recipeDetails', JSON.stringify(data));
-  return data;
 };
 
 export const addRecipeToMenu = function () {
@@ -249,8 +209,6 @@ const init = function () {
   if (fridgeIngredients)
     state.fridgeIngredients = Object.values(JSON.parse(fridgeIngredients));
   if (menu) state.menu = Object.values(JSON.parse(menu));
-
-  console.log('💥 STATE', state);
 };
 
 init();

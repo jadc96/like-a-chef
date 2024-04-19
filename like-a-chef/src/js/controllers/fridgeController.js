@@ -10,11 +10,11 @@ import {
 export async function controlFridge() {
   fridgeView.renderHTML();
 
-  fridgeView.updateNumIngredients();
+  fridgeView.updateNumIngredients(state.fridgeIngredients.length);
   if (state.fridgeIngredients.length === 0) return;
 
   state.fridgeIngredients.forEach(el => fridgeView.displayIngredient(el));
-  fridgeView.updateNumIngredients();
+  fridgeView.updateNumIngredients(state.fridgeIngredients.length);
 }
 
 // Autocomplete on the search bar for ingredients
@@ -74,7 +74,7 @@ export function handleSort(data) {
     if (el.categoryPath.includes(data)) fridgeView.displayIngredient(el);
   });
 
-  fridgeView.updateNumIngredients();
+  fridgeView.updateNumIngredients(state.fridgeIngredients.length);
 }
 
 // Delete ingredient from the state and removing it from the DOM
@@ -82,5 +82,5 @@ export function handleDeleteIngredient(id) {
   const [ing] = state.fridgeIngredients.filter(el => el.id === id);
   deleteIng(id);
   fridgeView.removeIngredient(ing.name);
-  fridgeView.updateNumIngredients();
+  fridgeView.updateNumIngredients(state.fridgeIngredients.length);
 }
